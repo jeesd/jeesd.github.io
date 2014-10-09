@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>git学习（windows下安装） | jeesd</title>
+    <title>TortoiseSVN（windows下安装） | jeesd</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="songshidong">
     
-    <meta name="description" itemprop="description" content="git的安装和简单操作">
+    <meta name="description" itemprop="description" content="TortoiseSVN的安装和简单操作">
     
     
     
@@ -69,7 +69,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2013/12/02/git2/" title="git学习（windows下安装）" itemprop="url">git学习（windows下安装）</a>
+      <a href="/2013/12/02/svn1/" title="TortoiseSVN（windows下安装）" itemprop="url">TortoiseSVN（windows下安装）</a>
   </h1>
   <p class="article-author">By
     
@@ -77,7 +77,7 @@
     </p>
   <p class="article-time">
     <time datetime="2013-12-02T07:30:16.000Z" itemprop="datePublished">12月 2 2013</time>
-    更新日期:<time datetime="2014-10-09T08:30:25.000Z" itemprop="dateModified">10月 9 2014</time>
+    更新日期:<time datetime="2014-10-09T09:47:35.000Z" itemprop="dateModified">10月 9 2014</time>
     
   </p>
 </header>
@@ -89,17 +89,20 @@
 		
 		</div>
 		
-		<pre><code>Git安装（Windows&amp;Linux）
-
-Windows
-</code></pre><p>Git是一个免费的、开源的版本控制软件。在Windows上安装git，一般为msysgit，官方下载地址为 <a href="http://msysgit.github.io/" target="_blank" rel="external">http://msysgit.github.io/</a><br>安装文件地址：common（\192.168.1.11）/svn 中<br>工具/原料<br>Win7、msysgit<br>步骤/方法<br>下载：在官方网站下载最新版本。</p>
-<p> Git windows 安装</p>
-<p>安装：点击下一步，直到出现步骤三。<br><img src="/img/git1.png" alt="这是一张图片"></p>
-<p>在Windows Explorer integration选项中将“Git Bash here”和“Git GUI here”打对勾。<br><img src="/img/git2.png" alt="这是一张图片"></p>
-<p>在“Adjusting your PATH environment”选项中，默认即可。<br><img src="/img/git3.png" alt="这是一张图片"></p>
-<p>在“Configuring the line ending conversions”选项中，<br>第一个选项：如果是跨平台项目，在windows系统安装，选择；<br>第二个选项：如果是跨平台项目，在Unix系统安装，选择；<br>第三个选项：非跨平台项目，选择。<br><img src="/img/git4.png" alt="这是一张图片"></p>
-<p>选择“Finish”，结束安装<br><img src="/img/git5.png" alt="这是一张图片"></p>
-<p>在桌面上或者是在开始菜单或者是右键，找到安装后的“Git Bash”选项，双击打开，可以进行操作了</p>
+		<pre><code> <span class="constant">TortoiseSVN</span>：是基于windows平台下<span class="constant">Subversion</span>的免费开源客户端。
+具体详细介绍请看：<span class="symbol">http:</span>/<span class="regexp">/tortoisesvn.net/</span>
+<span class="constant">TortoiseSVN</span>客户端下载和汉化语言包下载（语言包在下面、图就不截了、进去就看得见）：
+<span class="constant">TortoiseSVN</span>目前官方最新包是：<span class="constant">TortoiseSVN</span>-<span class="number">1.8</span>.<span class="number">7</span> 
+下载地址：<span class="symbol">http:</span>/<span class="regexp">/tortoisesvn.net/downloads</span>.html
+ 下载完成后安装<span class="constant">TortoiseSVN</span>：安装更简单点可执行文件然后一直<span class="keyword">next</span>到最后就ok。然后重启计算机。现在，你就可以使用<span class="constant">TortoiseSVN</span>了。
+</code></pre><p>TortoiseSVN集成于windows的资源管理器，直接在资源管理器中点击鼠标右键即可看到TortoiseSVN的功能选项。<br><img src="/img/svn1.png" alt="这是一张图片"></p>
+<p>SVN——TortoiseSVN安装使用 - - </p>
+<p>3、安装中文语言包。安装下载的中文语言包安装程序。完成后，在TortoiseSVN右键菜单的Settings选项中，选择简体中文即可。</p>
+<p>4、获取已有的版本库文件。</p>
+<p>版本库是Subversion的核心部分，是数据的中央仓库。版本库以典型的文件和目录结构形式文件系统树来保存信息。任意数量的客户端连接到Subversion版本库，读取、修改这些文件。客户端通过写数据将信息分享给其他人，通过读取数据获取别人共享的信息。</p>
+<p>TortoiseSVN可以通过file://、<a href="http://和svn://多种协议连接版本库。" target="_blank" rel="external">http://和svn://多种协议连接版本库。</a></p>
+<p>5.有了TortoiseSVN你就可以把一下开源项目（提供svn）的源码checkout到你本地电脑、非常方便不需要下载他们的压缩包、如果你在eclipse集成了svn就可以直接检出到eclipse里面。eclipse集成svn请参照</p>
+<p><a href="http://jeesd.com/2013/12/02/svn2/" target="_blank" rel="external">http://jeesd.com/2013/12/02/svn2/</a></p>
 <figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jeesd</div></pre></td></tr></table></figure>
 
   
@@ -121,7 +124,7 @@ Windows
 
 <div class="article-share" id="share">
 
-  <div data-url="http://jeesd.com/2013/12/02/git2/" data-title="git学习（windows下安装） | jeesd" data-tsina="null" class="share clearfix">
+  <div data-url="http://jeesd.com/2013/12/02/svn1/" data-title="TortoiseSVN（windows下安装） | jeesd" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -131,18 +134,18 @@ Windows
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2013/12/02/git4/" title="git学习（eclipse插件安装和使用）">
+ <a href="/2013/12/02/svn2/" title="Subversion+eclipse">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  git学习（eclipse插件安装和使用）</span>
+  Subversion+eclipse</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2013/12/02/spring1/"  title="springmvc配置全局异常">
+<a href="/2013/12/02/spring2/"  title="springmvc put and delete">
  <strong>NEXT:</strong><br/> 
- <span>springmvc配置全局异常
+ <span>springmvc put and delete
 </span>
 </a>
 </div>

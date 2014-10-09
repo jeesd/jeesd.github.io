@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>git学习（windows下安装） | jeesd</title>
+    <title>Subversion+eclipse | jeesd</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="songshidong">
     
-    <meta name="description" itemprop="description" content="git的安装和简单操作">
+    <meta name="description" itemprop="description" content="eclipse下安装Subversion">
     
     
     
@@ -69,7 +69,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2013/12/02/git2/" title="git学习（windows下安装）" itemprop="url">git学习（windows下安装）</a>
+      <a href="/2013/12/02/svn2/" title="Subversion+eclipse" itemprop="url">Subversion+eclipse</a>
   </h1>
   <p class="article-author">By
     
@@ -77,7 +77,7 @@
     </p>
   <p class="article-time">
     <time datetime="2013-12-02T07:30:16.000Z" itemprop="datePublished">12月 2 2013</time>
-    更新日期:<time datetime="2014-10-09T08:30:25.000Z" itemprop="dateModified">10月 9 2014</time>
+    更新日期:<time datetime="2014-10-09T09:47:08.000Z" itemprop="dateModified">10月 9 2014</time>
     
   </p>
 </header>
@@ -89,17 +89,12 @@
 		
 		</div>
 		
-		<pre><code>Git安装（Windows&amp;Linux）
+		<p>1、首先简单了解一下Subversion和eclipse<br>     Subversion简称SVN：<br>       svn是一个开源的版本控制器。虽然 Subversion 并不是 CVS 的完全替代品，但它的设计与 CVS 保持足够的相似性，以使 CVS 用户可以轻松的转移到 Subversion 上。<br>        SVN的优点：<br>        允许用户在各自的空间里修改和管理同一组数据可以促进团队协作。因为修改不再是单线进行，开发速度会更快。此外，由于所有的工作都已版本化，也就不必担心由于错误的更改而影响软件质量—如果出现不正确的更改，只要撤销那一次更改操作即可<br>       svn下载地址：      中文网站： <a href="http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=11151&amp;expandFolder=11151&amp;folderID=91" target="_blank" rel="external">http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=11151&amp;expandFolder=11151&amp;folderID=91</a><br>     Eclipse：Eclipse 是一个开放源代码的、基于Java的可扩展开发平台。就其本身而言，它只是一个框架和一组服务，用于通过插件组件构建开发环境。幸运的是，Eclipse 附带了一个标准的插件集，包括Java开发工具（Java Development Kit，JDK）<br>     下载地址：<a href="http://www.eclipse.org/downloads/" target="_blank" rel="external">http://www.eclipse.org/downloads/</a></p>
+<p>2、安装Subversion、建立版本库<br>    建立版本库有两种方式：<br>    1.通过使用TortoiseSVN工具创建：在你要创建版本库的路径d:/svn/repository下，右键-àTortoiseSVN-àCreate Repository here…，然后就创建了一系列目录和文件。<br>   2.通过命令<br>     2.1开始-运行-输入cmd-打开了dos窗口 运行svnadmin create d:/svn/repository<br>          2.2配置用户和权限</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">进入d:/svn/repository/conf目录，修改svnserve.conf： </div><div class="line">      将</div><div class="line">      <span class="comment"># [general] </span></div><div class="line">      <span class="comment"># password-db = passwd </span></div><div class="line">      改为： </div><div class="line">      [general] </div><div class="line">      <span class="variable">password-db =</span> passwd</div><div class="line">然后修改同目录的passwd文件，去掉下面三行的注释： </div><div class="line">      <span class="comment"># [users] </span></div><div class="line">      <span class="comment"># harry = harryssecret </span></div><div class="line">      <span class="comment"># sally = sallyssecret </span></div><div class="line">      最后变成： </div><div class="line">      [users] </div><div class="line">      <span class="variable">harry =</span> song</div><div class="line">      <span class="variable">sally =</span> <span class="number">123</span>        key和value对应的分别是用户名和密码。即song是用户名，<span class="number">123</span>是密码，可以自己修改或添加。</div></pre></td></tr></table></figure>
 
-Windows
-</code></pre><p>Git是一个免费的、开源的版本控制软件。在Windows上安装git，一般为msysgit，官方下载地址为 <a href="http://msysgit.github.io/" target="_blank" rel="external">http://msysgit.github.io/</a><br>安装文件地址：common（\192.168.1.11）/svn 中<br>工具/原料<br>Win7、msysgit<br>步骤/方法<br>下载：在官方网站下载最新版本。</p>
-<p> Git windows 安装</p>
-<p>安装：点击下一步，直到出现步骤三。<br><img src="/img/git1.png" alt="这是一张图片"></p>
-<p>在Windows Explorer integration选项中将“Git Bash here”和“Git GUI here”打对勾。<br><img src="/img/git2.png" alt="这是一张图片"></p>
-<p>在“Adjusting your PATH environment”选项中，默认即可。<br><img src="/img/git3.png" alt="这是一张图片"></p>
-<p>在“Configuring the line ending conversions”选项中，<br>第一个选项：如果是跨平台项目，在windows系统安装，选择；<br>第二个选项：如果是跨平台项目，在Unix系统安装，选择；<br>第三个选项：非跨平台项目，选择。<br><img src="/img/git4.png" alt="这是一张图片"></p>
-<p>选择“Finish”，结束安装<br><img src="/img/git5.png" alt="这是一张图片"></p>
-<p>在桌面上或者是在开始菜单或者是右键，找到安装后的“Git Bash”选项，双击打开，可以进行操作了</p>
+<p>3.通过dos命令运行服务器<br>3.1开始-运行-输入cmd-打开了dos窗口 运行 svnserve -d -r d:/svn/repository（当然如果关闭了dos窗口服务就接收了）</p>
+<p>4、eclipse安装、配置、使用就不多废话了eclipse快捷键请考：<br><a href="http://jeesd.com/2013/12/02/eclipse1/" target="_blank" rel="external">http://jeesd.com/2013/12/02/eclipse1/</a><br>下面主要是讲eclipse集成svn：eclipse集成svn有两种方法：插件包安装和插件安装<br>1.插件包安装：下载地址<br>links for 1.8.x Release:<br>Eclipse update site URL：<a href="http://subclipse.tigris.org/update_1.8.x/" target="_blank" rel="external">http://subclipse.tigris.org/update_1.8.x/</a><br>svn插件包下载：<a href="http://subclipse.tigris.org/servlets/ProjectDocumentList?folderID=2240" target="_blank" rel="external">http://subclipse.tigris.org/servlets/ProjectDocumentList?folderID=2240</a><br>下载插件包解压后把插件包目录（features和plugins里面的文件）复制到eclipse安装目录的这两个文件中。<br>Eclipse 安装最新SVN插件 - liujianqiao398 - 凌风冷暖<br><img src="/img/svn2.png" alt="这是一张图片"><br>        2.通过eclipse安装：<br>        在eclipse开发试图界面：help——-Install New Software ——-add<br>        然后填入name：subclipse 、 location：<a href="http://subclipse.tigris.org/update_1.8.x/然后一直next就ok" target="_blank" rel="external">http://subclipse.tigris.org/update_1.8.x/然后一直next就ok</a><br><img src="/img/svn3.png" alt="这是一张图片"><br><img src="/img/svn4.png" alt="这是一张图片"><br><img src="/img/svn5.png" alt="这是一张图片"><br><img src="/img/svn6.png" alt="这是一张图片"></p>
 <figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jeesd</div></pre></td></tr></table></figure>
 
   
@@ -121,7 +116,7 @@ Windows
 
 <div class="article-share" id="share">
 
-  <div data-url="http://jeesd.com/2013/12/02/git2/" data-title="git学习（windows下安装） | jeesd" data-tsina="null" class="share clearfix">
+  <div data-url="http://jeesd.com/2013/12/02/svn2/" data-title="Subversion+eclipse | jeesd" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -131,18 +126,18 @@ Windows
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2013/12/02/git4/" title="git学习（eclipse插件安装和使用）">
+ <a href="/2013/12/02/git1/" title="git学习（基本概念）">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  git学习（eclipse插件安装和使用）</span>
+  git学习（基本概念）</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2013/12/02/spring1/"  title="springmvc配置全局异常">
+<a href="/2013/12/02/svn1/"  title="TortoiseSVN（windows下安装）">
  <strong>NEXT:</strong><br/> 
- <span>springmvc配置全局异常
+ <span>TortoiseSVN（windows下安装）
 </span>
 </a>
 </div>

@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello Hexo | jeesd</title>
+    <title>git学习（eclipse插件安装和使用） | jeesd</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="songshidong">
     
-    <meta name="description" itemprop="description" content="基于hexo的博客搭建、基本介绍和常用命令">
+    <meta name="description" itemprop="description" content="eclipse下git插件的安装和简单操作">
     
     
     
@@ -69,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/09/hello-hexo/" title="Hello Hexo" itemprop="url">Hello Hexo</a>
+      <a href="/2013/12/02/git4/" title="git学习（eclipse插件安装和使用）" itemprop="url">git学习（eclipse插件安装和使用）</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://jeesd.com" title="songshidong">songshidong</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-09T06:16:01.000Z" itemprop="datePublished">10月 9 2014</time>
-    更新日期:<time datetime="2014-10-09T06:28:37.000Z" itemprop="dateModified">10月 9 2014</time>
+    <time datetime="2013-12-02T07:30:16.000Z" itemprop="datePublished">12月 2 2013</time>
+    更新日期:<time datetime="2014-10-09T08:51:13.000Z" itemprop="dateModified">10月 9 2014</time>
     
   </p>
 </header>
@@ -86,37 +86,37 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+		
 		</div>
 		
-		<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post.<br>Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo,<br>you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a><br>or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+		<p>eclipse下Git插件安装和使用<br>有的eclipse已经自带了GIt了，就不用安装了。如果，想重新安装，可以先卸载GIT，卸载<br>不同eclipse卸载不一样：<br>1.在Eclipse中依次点击菜单”Help”-&gt;”About Eclipse”。弹出图1所示对话框，点击”Installation Details”按钮，<br>弹出图2所示对话框。选中要卸载的插件（按住Ctrl可多选），点击”Uninstall…”按钮。<br><img src="/img/egit1.jpg" alt="这是一张图片"><br><img src="/img/egit2.jpg" alt="这是一张图片"><br>卸载完后，进行安装Git，和安装一般插件过程一样</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">打开eclipse<span class="variable">-&gt;Install</span> <span class="keyword">new</span> SoftWare</div><div class="line">EGit插件地址：http:<span class="comment">//download.eclipse.org/egit/updates</span></div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p><img src="/img/egit3.jpg" alt="这是一张图片"><br>OK，随后连续下一步默认安装就可以，安装后进行重启Eclipse</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">在eclipse中配置Egit</div><div class="line">Preferences &gt; Team &gt; Git &gt; Configuration</div><div class="line">设置<span class="literal">user</span>.name &<span class="literal">user</span>.email （<span class="literal">user</span>.name &<span class="literal">user</span>.email是在github上注册的账号）</div></pre></td></tr></table></figure>
 
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-  
+<p><img src="/img/egit4.jpg" alt="这是一张图片"></p>
+<pre><code>                                                                                      jeesd
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/工具/">工具</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/utils/">utils</a>
+</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://jeesd.com/2014/10/09/hello-hexo/" data-title="Hello Hexo | jeesd" data-tsina="null" class="share clearfix">
+  <div data-url="http://jeesd.com/2013/12/02/git4/" data-title="git学习（eclipse插件安装和使用） | jeesd" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -125,9 +125,17 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2013/12/02/git4/" title="git学习（linux下安装）">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  git学习（linux下安装）</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2013/12/02/git4/"  title="git学习（linux下安装）">
+<a href="/2013/12/02/git3 - 副本/"  title="git学习（linux下安装）">
  <strong>NEXT:</strong><br/> 
  <span>git学习（linux下安装）
 </span>
@@ -142,7 +150,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+  
   </div>
 
 <div id="asidepart">

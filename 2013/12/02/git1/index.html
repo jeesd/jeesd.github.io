@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello Hexo | jeesd</title>
+    <title>git学习（基本概念） | jeesd</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="songshidong">
     
-    <meta name="description" itemprop="description" content="基于hexo的博客搭建、基本介绍和常用命令">
+    <meta name="description" itemprop="description" content="git的基本概念和同功能软件的区别">
     
     
     
@@ -69,15 +69,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/10/09/hello-hexo/" title="Hello Hexo" itemprop="url">Hello Hexo</a>
+      <a href="/2013/12/02/git1/" title="git学习（基本概念）" itemprop="url">git学习（基本概念）</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://jeesd.com" title="songshidong">songshidong</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-10-09T06:16:01.000Z" itemprop="datePublished">10月 9 2014</time>
-    更新日期:<time datetime="2014-10-09T06:28:37.000Z" itemprop="dateModified">10月 9 2014</time>
+    <time datetime="2013-12-02T07:30:16.000Z" itemprop="datePublished">12月 2 2013</time>
+    更新日期:<time datetime="2014-10-09T08:30:18.000Z" itemprop="dateModified">10月 9 2014</time>
     
   </p>
 </header>
@@ -86,37 +86,67 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+		
 		</div>
 		
-		<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post.<br>Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo,<br>you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a><br>or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2>
-<h3 id="Create_a_new_post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+		<pre><code>关于版本控制
 
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+现在主流的版本控制器很多，主要分为两大类：
+<span class="number">1</span>·集中式的版本控制如（<span class="function_or_atom">cvs</span>、<span class="function_or_atom">svn</span>等），
+<span class="number">2</span>.分布式的版本控制如（<span class="function_or_atom">git</span>、<span class="function_or_atom">bazaar</span>等）
 
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+集中式的版本控制：都有一个单一的集中的管理服务器，保存所有文件的修订版本，协同工作的人们都通过客户端连接这台服务器
+取出最新或者提交更新。
 
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+优点：每个人都可以看到项目中其他人正在做什么，而且管理员可以很容易得掌握每个开发者的权限。
+缺点：中央服务器的单点故障，若服务器宕机，那么客户端就不能提交更新，也就是无法协同工作；如果中央服务器磁盘故障
+并且没有及时做备份，还会有数据丢失风险。
 
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-  
+分布式版本控制：客户端并不只提取最新版本的文件快照，而是把原始的代码仓库完整的镜像下来，简而言之就是每个客户端都是
+服务器，都有完整的代码仓库。
+
+优点：服务器宕机后，可以用任何一个镜像出来的本地仓库恢复。还可以在没有网络的情况下，可以单机开发，并提交和更新到
+本机代码仓库。
+缺点：权限不是很好管理。
+
+<span class="ok">ok</span>上面简单讲诉了两类型的版本控制器。我们今天主要讲解<span class="function_or_atom">git</span>。
+
+<span class="function_or_atom">git</span>的基础要点：
+<span class="number">1</span>.直接快照，而非比较差异。<span class="number">2</span>.所有操作都可以本地执行。 <span class="number">3</span>.时刻保持数据的完整性。<span class="number">4</span>.多数据操作仅添加数据。 
+
+<span class="number">5</span>.<span class="function_or_atom">git</span>的三种状态：已提交（<span class="function_or_atom">commotted</span>），已修改（<span class="function_or_atom">modified</span>），和已暂存（<span class="function_or_atom">staged</span>）。
+
+已提交：已提交表示文件已经安全的保持到本地代码仓库中。
+已修改：已修改表示修改了某个文件，但是还没有提交保存。
+已暂存：已暂停表示把已修改的文件放在下次保存的清单中。
+
+基本的<span class="function_or_atom">git</span>工作流程：<span class="number">1</span>.在工作目录中修改某些文件。<span class="number">2</span>.对这些修改了的文件快照，并保存到暂存区域。<span class="number">3</span>.提交更新，将暂存
+区域的文件快照转存到<span class="function_or_atom">git</span>目录中。
+
+
+
+
+                                                                                      <span class="function_or_atom">jeesd</span>
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/工具/">工具</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/utils/">utils</a>
+</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://jeesd.com/2014/10/09/hello-hexo/" data-title="Hello Hexo | jeesd" data-tsina="null" class="share clearfix">
+  <div data-url="http://jeesd.com/2013/12/02/git1/" data-title="git学习（基本概念） | jeesd" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -125,14 +155,14 @@
 	
 <nav class="article-nav clearfix">
  
-
-<div class="next">
-<a href="/2013/12/02/git4/"  title="git学习（linux下安装）">
- <strong>NEXT:</strong><br/> 
- <span>git学习（linux下安装）
-</span>
+ <div class="prev" >
+ <a href="/2013/12/02/git2/" title="git学习（windows下安装）">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  git学习（windows下安装）</span>
 </a>
 </div>
+
 
 </nav>
 
@@ -142,7 +172,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+  
   </div>
 
 <div id="asidepart">

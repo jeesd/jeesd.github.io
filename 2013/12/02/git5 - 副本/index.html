@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>git学习（linux下安装） | jeesd</title>
+    <title>git学习（eclipse插件安装和使用） | jeesd</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="songshidong">
     
-    <meta name="description" itemprop="description" content="git的安装和简单操作">
+    <meta name="description" itemprop="description" content="eclipse下git插件的简单操作">
     
     
     
@@ -69,7 +69,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2013/12/02/git3/" title="git学习（linux下安装）" itemprop="url">git学习（linux下安装）</a>
+      <a href="/2013/12/02/git5 - 副本/" title="git学习（eclipse插件安装和使用）" itemprop="url">git学习（eclipse插件安装和使用）</a>
   </h1>
   <p class="article-author">By
     
@@ -77,7 +77,7 @@
     </p>
   <p class="article-time">
     <time datetime="2013-12-02T07:30:16.000Z" itemprop="datePublished">12月 2 2013</time>
-    更新日期:<time datetime="2014-10-09T08:30:11.000Z" itemprop="dateModified">10月 9 2014</time>
+    更新日期:<time datetime="2014-10-21T02:11:30.000Z" itemprop="dateModified">10月 21 2014</time>
     
   </p>
 </header>
@@ -89,19 +89,30 @@
 		
 		</div>
 		
-		<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Git安装（Windows&Linux）</div><div class="line">Git Linux 安装</div></pre></td></tr></table></figure>
+		<p>eclipse下Git插件的使用：当然如果你想用命令操作也可以，这里我们主要讲插件的使用<br>1.从服务器起上pull源代码。</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">在Eclipse中依次点击菜单<span class="string">"file"</span>-&gt;<span class="string">"import"</span>-&gt;<span class="string">"git"</span>-&gt;<span class="string">"Projects from Git"</span>-&gt;<span class="string">"next"</span>-&gt;<span class="string">"Clone URL"</span>-&gt;<span class="string">"next"</span></div></pre></td></tr></table></figure>
 
-<p>linux下安装有两种方式：<br>1.源码安装：</p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">在github上面下载git的源文件</div><div class="line">下载依赖 <span class="variable">$ </span>yum install curl-devel expat-devel gettext-devel \ openssl-devel zlib-devel</div><div class="line">配置安装 <span class="variable">$ </span>tar -zxf git-<span class="number">1.7</span>.<span class="number">2.2</span>.tar.gz</div><div class="line">	      <span class="variable">$ </span>cd git-<span class="number">1.7</span>.<span class="number">2.2</span> </div><div class="line">           <span class="variable">$ </span>make prefix=<span class="regexp">/usr/local</span> all</div><div class="line">           <span class="variable">$ </span>sudo make prefix=<span class="regexp">/usr/local</span> install</div></pre></td></tr></table></figure>
+<p><img src="/img/git6.jpg" alt="这是一张图片"><br><img src="/img/git7.jpg" alt="这是一张图片"></p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">填写host和path（host是服务器主机的地址，path是项目名字，host和path添加好以后会默认添加到url里面）</div></pre></td></tr></table></figure>
 
-<p>2.Yum安装</p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$ </span>yum install git</div></pre></td></tr></table></figure>
+<p><img src="/img/git8.jpg" alt="这是一张图片"></p>
+<p>2.项目开发：svn在团队开发中，一般会使用分支开发，git也一样。</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">创建分支</div><div class="line">在Eclipse中在项目上点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Switch To"</span>-&gt;<span class="string">"New Branch.."</span>-&gt;输入分支名字</div></pre></td></tr></table></figure>
 
-<p>Git基本命令</p>
-<p>全局设定</p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">git config –global user.name “song”：设置全局用户名，对于所有仓库有效</div><div class="line">git config <span class="comment">--global user.email “songshid@163.com”：设置全局邮箱，相当于密码。对于所有仓库有效</span></div><div class="line">git config <span class="comment">--global color.ui “auto” ： 使用不同颜色显示不同类型的内容</span></div><div class="line">git config <span class="comment">--global --list ： 查看全局设定</span></div><div class="line">初始化仓库</div><div class="line">git init ：将会以.git文件存在于工作目录中，版本的所有变化都会在.git文件中，适合单独做项目</div><div class="line">git init –bare :创建一个空的仓库，适合做远程仓库，团队开发项目的首选模式</div><div class="line">将文件添加到版本库</div><div class="line">git add file ：指定文件缓存</div><div class="line">git add * ：缓存目录下所有文件</div><div class="line">提交记录</div><div class="line">git <span class="operator"><span class="keyword">commit</span> -m ‘message‘ ：提交记录</span></div><div class="line">查看日志</div><div class="line"> git <span class="keyword">log</span> [-<span class="number">1</span>] 显示条数</div><div class="line">更新</div><div class="line">git pull</div><div class="line">查看当前状态</div><div class="line">git <span class="keyword">status</span> </div><div class="line">查看文件修改</div><div class="line">git diff :默认比较工作目录树与缓存区的差异</div><div class="line">git diff <span class="comment">--cached :比较暂存区与版本库中的差异</span></div><div class="line">git diff HEAD :比较工作目录树与版本库的差异</div><div class="line">创建分支</div><div class="line">git branch RB_1<span class="number">.0</span> <span class="keyword">master</span>:基于<span class="keyword">master</span>分支创建RB_1<span class="number">.0</span>新的分支</div><div class="line">切换分支</div><div class="line">git checkout RB_1<span class="number">.0</span></div><div class="line">基于分支创建标签</div><div class="line">git tag <span class="number">1.0</span> RB_1<span class="number">.0</span></div><div class="line">删除分支</div><div class="line">git branch -d RB_1<span class="number">.0</span></div><div class="line">删除远程分支</div><div class="line">git push origin :developer</div><div class="line">克隆远程版本库</div><div class="line">git clone git://github.com/ylfighter/xxx.git mysite-remote : mysite-remote是本地仓库</div></pre></td></tr></table></figure>
+<p><img src="/img/git9.jpg" alt="这是一张图片"></p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">切换分支</div><div class="line">在Eclipse中在项目上点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Switch To"</span>-&gt;选择刚才创建的分支</div></pre></td></tr></table></figure>
 
-<pre><code>                                                                                      jeesd
+
+
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">源码push</div><div class="line">在Eclipse中在新添加的文件点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Add To Index"</span>-添加索引，然后才能提交</div><div class="line">在Eclipse中在项目上点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Commit"</span>-&gt;填写注释----&gt;</div><div class="line">由于git的分布式版本控制器，在pull源码的时候会从服务器copy一个完整的项目源码到本地，</div><div class="line">在创建分支的时候，本机和服务器都会相应的创建一个对应的代码仓库。</div><div class="line">Commit And Push:提交到本地仓库和推送到服务器仓库。</div><div class="line">Commit:只提交到本地仓库。</div></pre></td></tr></table></figure>
+
+<p><img src="/img/git10.jpg" alt="这是一张图片"></p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">源码push到服务器</div><div class="line">如果源代码已经全部提交到本机了，这时候Commit就会默认已经提交，但是实际没有推送到服务器，</div><div class="line">这实现需要：</div><div class="line">在Eclipse中在项目上点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Remote"</span>-&gt;Push----&gt;<span class="string">"next"</span>--&gt;<span class="string">"Source ref选择要推送的代码库"</span></div></pre></td></tr></table></figure>
+
+<p><img src="/img/git11.jpg" alt="这是一张图片"></p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">源码冲突处理</div><div class="line">在Eclipse中在冲突文件点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Merge Tool"</span>-对比，解决冲突</div><div class="line">在Eclipse中在冲突文件点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Add To Index"</span>-添加索引，然后才能提交</div></pre></td></tr></table></figure>
+
+<pre><code>                                                                        http:<span class="comment">//jeesd.com</span>
 </code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
@@ -121,7 +132,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://jeesd.com/2013/12/02/git3/" data-title="git学习（linux下安装） | jeesd" data-tsina="null" class="share clearfix">
+  <div data-url="http://jeesd.com/2013/12/02/git5 - 副本/" data-title="git学习（eclipse插件安装和使用） | jeesd" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -131,18 +142,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2013/12/02/eclipse1/" title="eclipse快捷键">
+ <a href="/2013/12/02/git5 - 副本/" title="git学习（eclipse插件安装和使用）">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  eclipse快捷键</span>
+  git学习（eclipse插件安装和使用）</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2013/12/02/svn1/"  title="TortoiseSVN（windows下安装）">
+<a href="/2013/12/02/git5/"  title="git学习（eclipse插件安装和使用）">
  <strong>NEXT:</strong><br/> 
- <span>TortoiseSVN（windows下安装）
+ <span>git学习（eclipse插件安装和使用）
 </span>
 </a>
 </div>

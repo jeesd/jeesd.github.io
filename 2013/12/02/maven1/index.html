@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>git学习（eclipse插件安装和使用） | jeesd</title>
+    <title>maven学习（maven安装.配置） | jeesd</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="songshidong">
     
-    <meta name="description" itemprop="description" content="eclipse下git插件的简单操作">
+    <meta name="description" itemprop="description" content="win7下maven安装.配置">
     
     
     
@@ -69,7 +69,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2013/12/02/maven1/" title="git学习（eclipse插件安装和使用）" itemprop="url">git学习（eclipse插件安装和使用）</a>
+      <a href="/2013/12/02/maven1/" title="maven学习（maven安装.配置）" itemprop="url">maven学习（maven安装.配置）</a>
   </h1>
   <p class="article-author">By
     
@@ -77,7 +77,7 @@
     </p>
   <p class="article-time">
     <time datetime="2013-12-02T07:30:16.000Z" itemprop="datePublished">12月 2 2013</time>
-    更新日期:<time datetime="2014-10-21T02:11:30.000Z" itemprop="dateModified">10月 21 2014</time>
+    更新日期:<time datetime="2014-10-24T00:36:31.000Z" itemprop="dateModified">10月 24 2014</time>
     
   </p>
 </header>
@@ -89,29 +89,9 @@
 		
 		</div>
 		
-		<p>eclipse下Git插件的使用：当然如果你想用命令操作也可以，这里我们主要讲插件的使用<br>1.从服务器起上pull源代码。</p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">在Eclipse中依次点击菜单<span class="string">"file"</span>-&gt;<span class="string">"import"</span>-&gt;<span class="string">"git"</span>-&gt;<span class="string">"Projects from Git"</span>-&gt;<span class="string">"next"</span>-&gt;<span class="string">"Clone URL"</span>-&gt;<span class="string">"next"</span></div></pre></td></tr></table></figure>
+		<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
 
-<p><img src="/img/git6.jpg" alt="这是一张图片"><br><img src="/img/git7.jpg" alt="这是一张图片"></p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">填写host和path（host是服务器主机的地址，path是项目名字，host和path添加好以后会默认添加到url里面）</div></pre></td></tr></table></figure>
-
-<p><img src="/img/git8.jpg" alt="这是一张图片"></p>
-<p>2.项目开发：svn在团队开发中，一般会使用分支开发，git也一样。</p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">创建分支</div><div class="line">在Eclipse中在项目上点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Switch To"</span>-&gt;<span class="string">"New Branch.."</span>-&gt;输入分支名字</div></pre></td></tr></table></figure>
-
-<p><img src="/img/git9.jpg" alt="这是一张图片"></p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">切换分支</div><div class="line">在Eclipse中在项目上点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Switch To"</span>-&gt;选择刚才创建的分支</div></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">源码push</div><div class="line">在Eclipse中在新添加的文件点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Add To Index"</span>-添加索引，然后才能提交</div><div class="line">在Eclipse中在项目上点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Commit"</span>-&gt;填写注释----&gt;</div><div class="line">由于git的分布式版本控制器，在pull源码的时候会从服务器copy一个完整的项目源码到本地，</div><div class="line">在创建分支的时候，本机和服务器都会相应的创建一个对应的代码仓库。</div><div class="line">Commit And Push:提交到本地仓库和推送到服务器仓库。</div><div class="line">Commit:只提交到本地仓库。</div></pre></td></tr></table></figure>
-
-<p><img src="/img/git10.jpg" alt="这是一张图片"></p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">源码push到服务器</div><div class="line">如果源代码已经全部提交到本机了，这时候Commit就会默认已经提交，但是实际没有推送到服务器，</div><div class="line">这实现需要：</div><div class="line">在Eclipse中在项目上点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Remote"</span>-&gt;Push----&gt;<span class="string">"next"</span>--&gt;<span class="string">"Source ref选择要推送的代码库"</span></div></pre></td></tr></table></figure>
-
-<p><img src="/img/git11.jpg" alt="这是一张图片"></p>
-<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">源码冲突处理</div><div class="line">在Eclipse中在冲突文件点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Merge Tool"</span>-对比，解决冲突</div><div class="line">在Eclipse中在冲突文件点击右键<span class="string">"Team"</span>-&gt;<span class="string">"Add To Index"</span>-添加索引，然后才能提交</div></pre></td></tr></table></figure>
-
+<p><img src="/img/maven1.jpg" alt="这是一张图片"></p>
 <pre><code>                                                                        http:<span class="comment">//jeesd.com</span>
 </code></pre>  
 	</div>
@@ -132,7 +112,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://jeesd.com/2013/12/02/maven1/" data-title="git学习（eclipse插件安装和使用） | jeesd" data-tsina="null" class="share clearfix">
+  <div data-url="http://jeesd.com/2013/12/02/maven1/" data-title="maven学习（maven安装.配置） | jeesd" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -142,18 +122,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2013/12/02/move/" title="博客搬迁">
+ <a href="/2013/12/02/spring2/" title="springmvc put and delete">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  博客搬迁</span>
+  springmvc put and delete</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2013/12/02/git4/"  title="git学习（eclipse插件安装和使用）">
+<a href="/2013/12/02/git3/"  title="git学习（linux下安装）">
  <strong>NEXT:</strong><br/> 
- <span>git学习（eclipse插件安装和使用）
+ <span>git学习（linux下安装）
 </span>
 </a>
 </div>
@@ -182,7 +162,7 @@
 		
 			<li><a href="/categories/spring/" title="spring">spring<sup>2</sup></a></li>
 		
-			<li><a href="/categories/utils/" title="utils">utils<sup>13</sup></a></li>
+			<li><a href="/categories/utils/" title="utils">utils<sup>9</sup></a></li>
 		
 			<li><a href="/categories/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
 		
@@ -195,7 +175,7 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/工具/" title="工具">工具<sup>13</sup></a></li>
+			<li><a href="/tags/工具/" title="工具">工具<sup>9</sup></a></li>
 		
 			<li><a href="/tags/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
 		

@@ -1,0 +1,590 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>java基础--异常处理 | jeesd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="songshidong">
+    
+    <meta name="description" itemprop="description" content="java基础--异常处理">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="jeesd" title="jeesd"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="jeesd">jeesd</a></h1>
+				<h2 class="blog-motto">~~東哥`博客~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">about</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:jeesd.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/03/01/javase4/" title="java基础--异常处理" itemprop="url">java基础--异常处理</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://jeesd.com" title="songshidong">songshidong</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-03-01T05:09:44.000Z" itemprop="datePublished">3月 1 2012</time>
+    更新日期:<time datetime="2015-02-28T07:26:20.000Z" itemprop="dateModified">2月 28 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p> 异常指不期而至的各种状况，如：文件找不到、网络连接失败、非法参数等。异常是一个事件，它发生在程序运行期间，干扰了正常的指令流程。Java通 过API中Throwable类的众多子类描述各种不同的异常。因而，Java异常都是对象，是Throwable子类的实例，描述了出现在一段编码中的 错误条件。当条件生成时，错误将引发异常。</p>
+<pre><code>  Java异常类层次结构图：
+</code></pre><p><img src="/img/javase4.jpg" alt="这是一张图片"><br>    在 Java 中，所有的异常都有一个共同的祖先 Throwable（可抛出）。Throwable 指定代码中可用异常传播机制通过 Java 应用程序传输的任何问题的共性。<br>   Throwable： 有两个重要的子类：Exception（异常）和 Error（错误），二者都是 Java 异常处理的重要子类，各自都包含大量子类。</p>
+<p>   Error（错误）:是程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。例如，Java虚拟机运行错误（Virtual MachineError），当 JVM 不再有继续执行操作所需的内存资源时，将出现 OutOfMemoryError。这些异常发生时，Java虚拟机（JVM）一般会选择线程终止。</p>
+<p>。这些错误表示故障发生于虚拟机自身、或者发生在虚拟机试图执行应用时，如Java虚拟机运行错误（Virtual MachineError）、类定义错误（NoClassDefFoundError）等。这些错误是不可查的，因为它们在应用程序的控制和处理能力之 外，而且绝大多数是程序运行时不允许出现的状况。对于设计合理的应用程序来说，即使确实发生了错误，本质上也不应该试图去处理它所引起的异常状况。在 Java中，错误通过Error的子类描述。</p>
+<p>   Exception（异常）:是程序本身可以处理的异常。<br>   Exception 类有一个重要的子类 RuntimeException。RuntimeException 类及其子类表示“JVM 常用操作”引发的错误。例如，若试图使用空值对象引用、除数为零或数组越界，则分别引发运行时异常（NullPointerException、ArithmeticException）和 ArrayIndexOutOfBoundException。</p>
+<p>   注意：异常和错误的区别：异常能被程序本身可以处理，错误是无法处理。</p>
+<p>   通常，Java的异常(包括Exception和Error)分为可查的异常（checked exceptions）和不可查的异常（unchecked exceptions）。<br>  可查异常（编译器要求必须处置的异常）：正确的程序在运行中，很容易出现的、情理可容的异常状况。可查异常虽然是异常状况，但在一定程度上它的发生是可以预计的，而且一旦发生这种异常状况，就必须采取某种方式进行处理。</p>
+<p>  除了RuntimeException及其子类以外，其他的Exception类及其子类都属于可查异常。这种异常的特点是Java编译器会检查它，也就是说，当程序中可能出现这类异常，要么用try-catch语句捕获它，要么用throws子句声明抛出它，否则编译不会通过。</p>
+<p> 不可查异常(编译器不要求强制处置的异常):包括运行时异常（RuntimeException与其子类）和错误（Error）。</p>
+<p> Exception 这种异常分两大类运行时异常和非运行时异常(编译异常)。程序中应当尽可能去处理这些异常。</p>
+<p>   运行时异常：都是RuntimeException类及其子类异常，如NullPointerException(空指针异常)、IndexOutOfBoundsException(下标越界异常)等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引起的，程序应该从逻辑角度尽可能避免这类异常的发生。</p>
+<p>  运行时异常的特点是Java编译器不会检查它，也就是说，当程序中可能出现这类异常，即使没有用try-catch语句捕获它，也没有用throws子句声明抛出它，也会编译通过。<br>   非运行时异常 （编译异常）：是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。如IOException、SQLException等以及用户自定义的Exception异常，一般情况下不自定义检查异常。</p>
+<p> 4.处理异常机制</p>
+<pre><code>在 Java 应用程序中，异常处理机制为：抛出异常，捕捉异常。
+
+抛出异常：当一个方法出现错误引发异常时，方法创建异常对象并交付运行时系统，异常对象中包含了异常类型和异常出现时的程序状态等异常信息。运行时系统负责寻找处置异常的代码并执行。
+
+捕获异常：在方法抛出异常之后，运行时系统将转为寻找合适的异常处理器（<span class="keyword">exception</span> handler）。潜在的异常处理器是异常发生时依次存留在调用栈中的方法的集合。当异常处理器所能处理的异常类型与方法抛出的异常类型相符时，即为合适 的异常处理器。运行时系统从发生异常的方法开始，依次回查调用栈中的方法，直至找到含有合适异常处理器的方法并执行。当运行时系统遍历调用栈而未找到合适 的异常处理器，则运行时系统终止。同时，意味着Java程序的终止。
+
+对于运行时异常、错误或可查异常，Java技术所要求的异常处理方式有所不同。
+
+由于运行时异常的不可查性，为了更合理、更容易地实现应用程序，Java规定，运行时异常将由Java运行时系统自动抛出，允许应用程序忽略运行时异常。
+</code></pre><p>   对于方法运行中可能出现的Error，当运行方法不欲捕捉时，Java允许该方法不做任何抛出声明。因为，大多数Error异常属于永远不能被允许发生的状况，也属于合理的应用程序不该捕捉的异常。</p>
+<p>   对于所有的可查异常，Java规定：一个方法必须捕捉，或者声明抛出方法之外。也就是说，当一个方法选择不捕捉可查异常时，它必须声明将抛出异常。</p>
+<pre><code>能够捕捉异常的方法，需要提供相符类型的异常处理器。所捕捉的异常，可能是由于自身语句所引发并抛出的异常，也可能是由某个调用的方法或者Java运行时 系统等抛出的异常。也就是说，一个方法所能捕捉的异常，一定是Java代码在某处所抛出的异常。简单地说，异常总是先被抛出，后被捕捉的。
+
+ 任何Java代码都可以抛出异常，如：自己编写的代码、来自Java开发环境包中代码，或者Java运行时系统。无论是谁，都可以通过Java的<span class="keyword">throw</span>语句抛出异常。
+
+从方法中抛出的任何异常都必须使用throws子句。
+
+捕捉异常通过<span class="keyword">try</span>-<span class="keyword">catch</span>语句或者<span class="keyword">try</span>-<span class="keyword">catch</span>-<span class="keyword">finally</span>语句实现。
+
+ 总体来说，Java规定：对于可查异常必须捕捉、或者声明抛出。允许忽略不可查的RuntimeException和<span class="built_in">Error</span>。
+</code></pre><p>4.1 捕获异常：try、catch 和 finally</p>
+<p>1.try-catch语句</p>
+<pre><code> 在Java中，异常通过<span class="keyword">try</span>-<span class="keyword">catch</span>语句捕获。其一般语法形式为：
+</code></pre><figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> {  </div><div class="line">    <span class="comment">// 可能会发生异常的程序代码  </span></div><div class="line">} <span class="keyword">catch</span> (Type1 id1){  </div><div class="line">    <span class="comment">// 捕获并处置try抛出的异常类型Type1  </span></div><div class="line">}  </div><div class="line"><span class="keyword">catch</span> (Type2 id2){  </div><div class="line">     <span class="comment">//捕获并处置try抛出的异常类型Type2  </span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<pre><code>   关键词<span class="keyword">try</span>后的一对大括号将一块可能发生异常的代码包起来，称为监控区域。Java方法在运行过程中出现异常，则创建异常对象。将异常抛出监控区域之 外，由Java运行时系统试图寻找匹配的<span class="keyword">catch</span>子句以捕获异常。若有匹配的<span class="keyword">catch</span>子句，则运行其异常处理代码，<span class="keyword">try</span>-<span class="keyword">catch</span>语句结束。
+
+   匹配的原则是：如果抛出的异常对象属于<span class="keyword">catch</span>子句的异常类，或者属于该异常类的子类，则认为生成的异常对象与<span class="keyword">catch</span>块捕获的异常类型相匹配。
+</code></pre><p>例1  捕捉throw语句抛出的“除数为0”异常。</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> TestException {  </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {  </div><div class="line">        <span class="keyword">int</span> a = <span class="number">6</span>;  </div><div class="line">        <span class="keyword">int</span> b = <span class="number">0</span>;  </div><div class="line">        <span class="keyword">try</span> { <span class="comment">// try监控区域  </span></div><div class="line">              </div><div class="line">            <span class="keyword">if</span> (b == <span class="number">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> ArithmeticException(); <span class="comment">// 通过throw语句抛出异常  </span></div><div class="line">            System.<span class="keyword">out</span>.println(<span class="string">"a/b的值是："</span> + a / b);  </div><div class="line">        }  </div><div class="line">        <span class="keyword">catch</span> (ArithmeticException e) { <span class="comment">// catch捕捉异常  </span></div><div class="line">            System.<span class="keyword">out</span>.println(<span class="string">"程序出现异常，变量b不能为0。"</span>);  </div><div class="line">        }  </div><div class="line">        System.<span class="keyword">out</span>.println(<span class="string">"程序正常结束。"</span>);  </div><div class="line">    }  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>运行结果：程序出现异常，变量b不能为0。</p>
+<pre><code>                程序正常结束。
+
+    例<span class="number">1</span>  在<span class="keyword">try</span>监控区域通过<span class="keyword">if</span>语句进行判断，当“除数为<span class="number">0</span>”的错误条件成立时引发ArithmeticException异常，创建 ArithmeticException异常对象，并由<span class="keyword">throw</span>语句将异常抛给Java运行时系统，由系统寻找匹配的异常处理器<span class="keyword">catch</span>并运行相应异 常处理代码，打印输出“程序出现异常，变量b不能为<span class="number">0</span>。”<span class="keyword">try</span>-<span class="keyword">catch</span>语句结束，继续程序流程。
+
+    事实上，“除数为<span class="number">0</span>”等ArithmeticException，是RuntimException的子类。而运行时异常将由运行时系统自动抛出，不需要使用<span class="keyword">throw</span>语句。
+</code></pre><p>例2  捕捉运行时系统自动抛出“除数为0”引发的ArithmeticException异常。</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {  </div><div class="line">        <span class="keyword">int</span> a = <span class="number">6</span>;  </div><div class="line">        <span class="keyword">int</span> b = <span class="number">0</span>;  </div><div class="line">        <span class="keyword">try</span> {  </div><div class="line">            System.<span class="keyword">out</span>.println(<span class="string">"a/b的值是："</span> + a / b);  </div><div class="line">        } <span class="keyword">catch</span> (ArithmeticException e) {  </div><div class="line">            System.<span class="keyword">out</span>.println(<span class="string">"程序出现异常，变量b不能为0。"</span>);  </div><div class="line">        }  </div><div class="line">        System.<span class="keyword">out</span>.println(<span class="string">"程序正常结束。"</span>);  </div><div class="line">    }  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>运行结果：程序出现异常，变量b不能为0。</p>
+<pre><code>              程序正常结束。
+</code></pre><p>例2  中的语句：</p>
+<p>System.out.println(“a/b的值是：” + a/b);</p>
+<pre><code>  在运行中出现“除数为<span class="number">0</span>”错误，引发ArithmeticException异常。运行时系统创建异常对象并抛出监控区域，转而匹配合适的异常处理器<span class="keyword">catch</span>，并执行相应的异常处理代码。
+
+  由于检查运行时异常的代价远大于捕捉异常所带来的益处，运行时异常不可查。Java编译器允许忽略运行时异常，一个方法可以既不捕捉，也不声明抛出运行时异常。
+</code></pre><p>例3  不捕捉、也不声明抛出运行时异常。</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> TestException {  </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {  </div><div class="line">        <span class="keyword">int</span> a, b;  </div><div class="line">        a = <span class="number">6</span>;  </div><div class="line">        b = <span class="number">0</span>; <span class="comment">// 除数b 的值为0  </span></div><div class="line">        System.<span class="keyword">out</span>.println(a / b);  </div><div class="line">    }  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>Exception in thread “main” java.lang.ArithmeticException: / by zero<br>at Test.TestException.main(TestException.java:8)</p>
+<p>例4  程序可能存在除数为0异常和数组下标越界异常。</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> TestException {  </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {  </div><div class="line">        <span class="keyword">int</span>[] intArray = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];  </div><div class="line">        <span class="keyword">try</span> {  </div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= intArray.length; i++) {  </div><div class="line">                intArray[i] = i;  </div><div class="line">                System.<span class="keyword">out</span>.println(<span class="string">"intArray["</span> + i + <span class="string">"] = "</span> + intArray[i]);  </div><div class="line">                System.<span class="keyword">out</span>.println(<span class="string">"intArray["</span> + i + <span class="string">"]模 "</span> + (i - <span class="number">2</span>) + <span class="string">"的值:  "</span>  </div><div class="line">                        + intArray[i] % (i - <span class="number">2</span>));  </div><div class="line">            }  </div><div class="line">        } <span class="keyword">catch</span> (ArrayIndexOutOfBoundsException e) {  </div><div class="line">            System.<span class="keyword">out</span>.println(<span class="string">"intArray数组下标越界异常。"</span>);  </div><div class="line">        } <span class="keyword">catch</span> (ArithmeticException e) {  </div><div class="line">            System.<span class="keyword">out</span>.println(<span class="string">"除数为0异常。"</span>);  </div><div class="line">        }  </div><div class="line">        System.<span class="keyword">out</span>.println(<span class="string">"程序正常结束。"</span>);  </div><div class="line">    }  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>intArray[0] = 0</p>
+<p>intArray[0]模 -2的值:  0</p>
+<p>intArray[1] = 1</p>
+<p>intArray[1]模 -1的值:  0</p>
+<p>intArray[2] = 2</p>
+<p>除数为0异常。</p>
+<p>程序正常结束。</p>
+<pre><code>  例<span class="number">4</span>  程序可能会出现除数为<span class="number">0</span>异常，还可能会出现数组下标越界异常。程序运行过程中ArithmeticException异常类型是先行匹配的，因此执行相匹配的<span class="keyword">catch</span>语句：
+
+<span class="keyword">catch</span> (ArithmeticException e){  
+      System.<span class="keyword">out</span>.println(<span class="string">"除数为0异常。"</span>);  
+ }  
+
+   需要注意的是，一旦某个<span class="keyword">catch</span>捕获到匹配的异常类型，将进入异常处理代码。一经处理结束，就意味着整个<span class="keyword">try</span>-<span class="keyword">catch</span>语句结束。其他的<span class="keyword">catch</span>子句不再有匹配和捕获异常类型的机会。
+
+  Java通过异常类描述异常类型，异常类的层次结构如图<span class="number">1</span>所示。对于有多个<span class="keyword">catch</span>子句的异常程序而言，应该尽量将捕获底层异常类的<span class="keyword">catch</span>子 句放在前面，同时尽量将捕获相对高层的异常类的<span class="keyword">catch</span>子句放在后面。否则，捕获底层异常类的<span class="keyword">catch</span>子句将可能会被屏蔽。
+
+  RuntimeException异常类包括运行时各种常见的异常，ArithmeticException类和ArrayIndexOutOfBoundsException类都是它的子类。因此，RuntimeException异常类的<span class="keyword">catch</span>子句应该放在 最后面，否则可能会屏蔽其后的特定异常处理或引起编译错误。
+</code></pre><ol>
+<li><p>try－catch-finally语句</p>
+<p>   try-catch语句还可以包括第三部分，就是finally子句。它表示无论是否出现异常，都应当执行的内容。try-catch-finally语句的一般语法形式为：</p>
+</li>
+</ol>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">              <span class="keyword">try</span> {  </div><div class="line">    <span class="comment">// 可能会发生异常的程序代码  </span></div><div class="line">} <span class="keyword">catch</span> (Type1 id1) {  </div><div class="line">    <span class="comment">// 捕获并处理try抛出的异常类型Type1  </span></div><div class="line">} <span class="keyword">catch</span> (Type2 id2) {  </div><div class="line">    <span class="comment">// 捕获并处理try抛出的异常类型Type2  </span></div><div class="line">} <span class="keyword">finally</span> {  </div><div class="line">    <span class="comment">// 无论是否发生异常，都将执行的语句块  </span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>例5  带finally子句的异常处理程序。</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> TestException {  </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String args[]) {  </div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;  </div><div class="line">        String greetings[] = { <span class="string">" Hello world !"</span>, <span class="string">" Hello World !! "</span>,  </div><div class="line">                <span class="string">" HELLO WORLD !!!"</span> };  </div><div class="line">        <span class="keyword">while</span> (i &lt; <span class="number">4</span>) {  </div><div class="line">            <span class="keyword">try</span> {  </div><div class="line">                <span class="comment">// 特别注意循环控制变量i的设计，避免造成无限循环  </span></div><div class="line">                System.<span class="keyword">out</span>.println(greetings[i++]);  </div><div class="line">            } <span class="keyword">catch</span> (ArrayIndexOutOfBoundsException e) {  </div><div class="line">                System.<span class="keyword">out</span>.println(<span class="string">"数组下标越界异常"</span>);  </div><div class="line">            } <span class="keyword">finally</span> {  </div><div class="line">                System.<span class="keyword">out</span>.println(<span class="string">"--------------------------"</span>);  </div><div class="line">            }  </div><div class="line">        }  </div><div class="line">    }  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>Hello world !</p>
+<hr>
+<p>Hello World !!</p>
+<hr>
+<p>HELLO WORLD !!!</p>
+<hr>
+<p>数组下标越界异常</p>
+<hr>
+<pre><code> 在例<span class="number">5</span>中，请特别注意<span class="keyword">try</span>子句中语句块的设计，如果设计为如下，将会出现死循环。如果设计为：
+
+<span class="keyword">try</span> {  
+      System.<span class="keyword">out</span>.println (greetings[i]); i++;  
+}  
+</code></pre><p>小结：</p>
+<p>try 块：用于捕获异常。其后可接零个或多个catch块，如果没有catch块，则必须跟一个finally块。<br>catch 块：用于处理try捕获到的异常。<br>finally 块：无论是否捕获或处理异常，finally块里的语句都会被执行。当在try块或catch块中遇到return语句时，finally语句块将在方法返回之前被执行。在以下4种特殊情况下，finally块不会被执行：<br>1）在finally语句块中发生了异常。<br>2）在前面的代码中用了System.exit()退出程序。<br>3）程序所在的线程死亡。<br>4）关闭CPU。</p>
+<ol>
+<li>try-catch-finally 规则(异常处理语句的语法规则）：</li>
+</ol>
+<p>1)  必须在 try 之后添加 catch 或 finally 块。try 块后可同时接 catch 和 finally 块，但至少有一个块。<br>2) 必须遵循块顺序：若代码同时使用 catch 和 finally 块，则必须将 catch 块放在 try 块之后。<br>3) catch 块与相应的异常类的类型相关。<br>4) 一个 try 块可能有多个 catch 块。若如此，则执行第一个匹配块。即Java虚拟机会把实际抛出的异常对象依次和各个catch代码块声明的异常类型匹配，如果异常对象为某个异常类型或其子类的实例，就执行这个catch代码块，不会再执行其他的 catch代码块<br>5) 可嵌套 try-catch-finally 结构。<br>6) 在 try-catch-finally 结构中，可重新抛出异常。<br>7) 除了下列情况，总将执行 finally 做为结束：JVM 过早终止（调用 System.exit(int)）；在 finally 块中抛出一个未处理的异常；计算机断电、失火、或遭遇病毒攻击。</p>
+<ol>
+<li>try、catch、finally语句块的执行顺序:</li>
+</ol>
+<p>1)当try没有捕获到异常时：try语句块中的语句逐一被执行，程序将跳过catch语句块，执行finally语句块和其后的语句；</p>
+<p>2)当try捕获到异常，catch语句块里没有处理此异常的情况：当try语句块里的某条语句出现异常时，而没有处理此异常的catch语句块时，此异常将会抛给JVM处理，finally语句块里的语句还是会被执行，但finally语句块后的语句不会被执行；</p>
+<p>3)当try捕获到异常，catch语句块里有处理此异常的情况：在try语句块中是按照顺序来执行的，当执行到某一条语句出现异常时，程序将跳到catch语句块，并与catch语句块逐一匹配，找到与之对应的处理程序，其他的catch语句块将不会被执行，而try语句块中，出现异常之后的语句也不会被执行，catch语句块执行完后，执行finally语句块里的语句，最后执行finally语句块后的语句；<br> 图示try、catch、finally语句块的执行：<br><img src="/img/javase4.1.jpg" alt="这是一张图片"><br>4.2 抛出异常</p>
+<pre><code>  任何Java代码都可以抛出异常，如：自己编写的代码、来自Java开发环境包中代码，或者Java运行时系统。无论是谁，都可以通过Java的<span class="keyword">throw</span>语句抛出异常。从方法中抛出的任何异常都必须使用<span class="keyword">throws</span>子句。
+</code></pre><ol>
+<li><p>throws抛出异常</p>
+<p>如果一个方法可能会出现异常，但没有能力处理这种异常，可以在方法声明处用throws子句来声明抛出异常。例如汽车在运行时可能会出现故障，汽车本身没办法处理这个故障，那就让开车的人来处理。</p>
+<p>  throws语句用在方法定义时声明该方法要抛出的异常类型，如果抛出的是Exception异常类型，则该方法被声明为抛出所有的异常。多个异常可使用逗号分割。throws语句的语法格式为：</p>
+<p> methodname throws Exception1,Exception2,..,ExceptionN<br> {<br> }  </p>
+<p> 方法名后的throws Exception1,Exception2,…,ExceptionN 为声明要抛出的异常列表。当方法抛出异常列表的异常时，方法将不对这些类型及其子类类型的异常作处理，而抛向调用该方法的方法，由他去处理。例如：</p>
+</li>
+</ol>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">import java.lang.Exception;  </div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> TestException {  </div><div class="line">    <span class="keyword">static</span> <span class="keyword">void</span> pop() throws NegativeArraySizeException {  </div><div class="line">        <span class="comment">// 定义方法并抛出NegativeArraySizeException异常  </span></div><div class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[-<span class="number">3</span>]; <span class="comment">// 创建数组  </span></div><div class="line">    }  </div><div class="line">  </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) { <span class="comment">// 主方法  </span></div><div class="line">        <span class="keyword">try</span> { <span class="comment">// try语句处理异常信息  </span></div><div class="line">            pop(); <span class="comment">// 调用pop()方法  </span></div><div class="line">        } <span class="keyword">catch</span> (NegativeArraySizeException e) {  </div><div class="line">            System.<span class="keyword">out</span>.println(<span class="string">"pop()方法抛出的异常"</span>);<span class="comment">// 输出异常信息  </span></div><div class="line">        }  </div><div class="line">    }  </div><div class="line">  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<pre><code>使用<span class="keyword">throws</span>关键字将异常抛给调用者后，如果调用者不想处理该异常，可以继续向上抛出，但最终要有能够处理该异常的调用者。
+
+<span class="keyword">pop</span>方法没有处理异常NegativeArraySizeException，而是由main函数来处理。
+
+<span class="keyword">Throws</span>抛出异常的规则：
+
+<span class="number">1</span>) 如果是不可查异常（unchecked exception），即Error、RuntimeException或它们的子类，那么可以不使用<span class="keyword">throws</span>关键字来声明要抛出的异常，编译仍能顺利通过，但在运行时会被系统抛出。
+
+<span class="number">2</span>）必须声明方法可抛出的任何可查异常（checked exception）。即如果一个方法可能出现受可查异常，要么用<span class="keyword">try</span>-<span class="keyword">catch</span>语句捕获，要么用<span class="keyword">throws</span>子句声明将它抛出，否则会导致编译错误
+
+<span class="number">3</span>)仅当抛出了异常，该方法的调用者才必须处理或者重新抛出该异常。当方法的调用者无力处理该异常的时候，应该继续抛出，而不是囫囵吞枣。
+
+<span class="number">4</span>）调用方法必须遵循任何可查异常的处理和声明规则。若覆盖一个方法，则不能声明与覆盖方法不同的异常。声明的任何异常必须是被覆盖方法所声明异常的同类或子类。
+
+例如：
+</code></pre><figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> method1() <span class="keyword">throws</span> IOException{}  <span class="comment">//合法    </span></div><div class="line">   </div><div class="line"><span class="comment">//编译错误，必须捕获或声明抛出IOException    </span></div><div class="line"><span class="keyword">void</span> method2(){    </div><div class="line">  method1();    </div><div class="line">}    </div><div class="line">   </div><div class="line"><span class="comment">//合法，声明抛出IOException    </span></div><div class="line"><span class="keyword">void</span> method3()<span class="keyword">throws</span> IOException {    </div><div class="line">  method1();    </div><div class="line">}    </div><div class="line">   </div><div class="line"><span class="comment">//合法，声明抛出Exception，IOException是Exception的子类    </span></div><div class="line"><span class="keyword">void</span> method4()<span class="keyword">throws</span> Exception {    </div><div class="line">  method1();    </div><div class="line">}    </div><div class="line">   </div><div class="line"><span class="comment">//合法，捕获IOException    </span></div><div class="line"><span class="keyword">void</span> method5(){    </div><div class="line"> <span class="keyword">try</span>{    </div><div class="line">    method1();    </div><div class="line"> }<span class="keyword">catch</span>(IOException e){…}    </div><div class="line">}    </div><div class="line">   </div><div class="line"><span class="comment">//编译错误，必须捕获或声明抛出Exception    </span></div><div class="line"><span class="keyword">void</span> method6(){    </div><div class="line">  <span class="keyword">try</span>{    </div><div class="line">    method1();    </div><div class="line">  }<span class="keyword">catch</span>(IOException e){<span class="keyword">throw</span> <span class="keyword">new</span> Exception();}    </div><div class="line">}    </div><div class="line">   </div><div class="line"><span class="comment">//合法，声明抛出Exception    </span></div><div class="line"><span class="keyword">void</span> method7()<span class="keyword">throws</span> Exception{    </div><div class="line"> <span class="keyword">try</span>{    </div><div class="line">  method1();    </div><div class="line"> }<span class="keyword">catch</span>(IOException e){<span class="keyword">throw</span> <span class="keyword">new</span> Exception();}    </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<pre><code> 判断一个方法可能会出现异常的依据如下：
+ 1）方法中有throw语句。例如，以上<span class="function">method7</span>()方法的catch代码块有throw语句。
+ 2）调用了其他方法，其他方法用throws子句声明抛出某种异常。例如，<span class="function">method3</span>()方法调用了<span class="function">method1</span>()方法，<span class="function">method1</span>()方法声明抛出IOException，因此，在<span class="function">method3</span>()方法中可能会出现IOException。
+</code></pre><ol>
+<li><p>使用throw抛出异常<br>　  throw总是出现在函数体中，用来抛出一个Throwable类型的异常。程序会在throw语句后立即终止，它后面的语句执行不到，然后在包含它的所有try块中（可能在上层调用函数中）从里向外寻找含有与其匹配的catch子句的try块。<br>　　我们知道，异常是异常类的实例对象，我们可以创建异常类的实例对象通过throw语句抛出。该语句的语法格式为：<br> throw new exceptionname;<br> 例如抛出一个IOException类的异常对象：<br> throw new IOException;<br> 要注意的是，throw 抛出的只能够是可抛出类Throwable 或者其子类的实例对象。下面的操作是错误的：<br> throw new String(“exception”);</p>
+<p> 这是因为String 不是Throwable 类的子类。</p>
+<p>  如果抛出了检查异常，则还应该在方法头部声明方法可能抛出的异常类型。该方法的调用者也必须检查处理抛出的异常。</p>
+<pre><code>如果所有方法都层层上抛获取的异常，最终JVM会进行处理，处理也很简单，就是打印异常消息和堆栈信息。如果抛出的是<span class="built_in">Error</span>或RuntimeException，则该方法的调用者可选择处理该异常。
+</code></pre></li>
+</ol>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">package Test;  </div><div class="line">import java.lang.Exception;  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestException</span> </span>{  </div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> quotient(<span class="keyword">int</span> x, <span class="keyword">int</span> y) throws MyException { <span class="comment">// 定义方法抛出异常  </span></div><div class="line">        <span class="keyword">if</span> (y &lt; <span class="number">0</span>) { <span class="comment">// 判断参数是否小于0  </span></div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> MyException(<span class="string">"除数不能是负数"</span>); <span class="comment">// 异常信息  </span></div><div class="line">        }  </div><div class="line">        <span class="keyword">return</span> x/y; <span class="comment">// 返回值  </span></div><div class="line">    }  </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String args[]) { <span class="comment">// 主方法  </span></div><div class="line">        <span class="keyword">int</span>  a =<span class="number">3</span>;  </div><div class="line">        <span class="keyword">int</span>  b =<span class="number">0</span>;   </div><div class="line">        <span class="keyword">try</span> { <span class="comment">// try语句包含可能发生异常的语句  </span></div><div class="line">            <span class="keyword">int</span> result = quotient(a, b); <span class="comment">// 调用方法quotient()  </span></div><div class="line">        } <span class="keyword">catch</span> (MyException e) { <span class="comment">// 处理自定义异常  </span></div><div class="line">            System.out.println(e.getMessage()); <span class="comment">// 输出异常信息  </span></div><div class="line">        } <span class="keyword">catch</span> (ArithmeticException e) { <span class="comment">// 处理ArithmeticException异常  </span></div><div class="line">            System.out.println(<span class="string">"除数不能为0"</span>); <span class="comment">// 输出提示信息  </span></div><div class="line">        } <span class="keyword">catch</span> (Exception e) { <span class="comment">// 处理其他异常  </span></div><div class="line">            System.out.println(<span class="string">"程序发生了其他的异常"</span>); <span class="comment">// 输出提示信息  </span></div><div class="line">        }  </div><div class="line">    }  </div><div class="line">  </div><div class="line">}  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="inheritance"><span class="keyword">extends</span></span> <span class="title">Exception</span> </span>{ <span class="comment">// 创建自定义异常类  </span></div><div class="line">    String message; <span class="comment">// 定义String类型变量  </span></div><div class="line">    <span class="keyword">public</span> MyException(String ErrorMessagr) { <span class="comment">// 父类方法  </span></div><div class="line">        message = ErrorMessagr;  </div><div class="line">    }  </div><div class="line">  </div><div class="line">    <span class="keyword">public</span> String getMessage() { <span class="comment">// 覆盖getMessage()方法  </span></div><div class="line">        <span class="keyword">return</span> message;  </div><div class="line">    }  </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>4.3 异常链</p>
+<pre><code>  <span class="number">1</span>) 如果调用quotient(<span class="number">3</span>,-<span class="number">1</span>)，将发生<span class="type">MyException</span>异常，程序调转到catch (<span class="type">MyException</span> e)代码块中执行；
+
+  <span class="number">2</span>) 如果调用quotient(<span class="number">5</span>,<span class="number">0</span>)，将会因“除数为<span class="number">0</span>”错误引发<span class="type">ArithmeticException</span>异常，属于运行时异常类，由<span class="type">Java</span>运行时系统自动抛出。quotient（）方法没有捕捉<span class="type">ArithmeticException</span>异常，<span class="type">Java</span>运行时系统将沿方法调用栈查到main方法，将抛出的异常上传至quotient（）方法的调用者：
+
+     <span class="type">int</span> <span class="literal">result</span> = quotient(a, b); // 调用方法quotient()
+    由于该语句在<span class="keyword">try</span>监控区域内，因此传回的“除数为<span class="number">0</span>”的<span class="type">ArithmeticException</span>异常由<span class="type">Java</span>运行时系统抛出，并匹配catch子句：
+
+   catch (<span class="type">ArithmeticException</span> e) { // 处理<span class="type">ArithmeticException</span>异常
+</code></pre><p>System.out.println(“除数不能为0”); // 输出提示信息<br>} </p>
+<pre><code>    处理结果是输出“除数不能为<span class="number">0</span>”。Java这种向上传递异常信息的处理机制，形成异常链。
+
+   Java方法抛出的可查异常将依据调用栈、沿着方法调用的层次结构一直传递到具备处理能力的调用方法，最高层次到main方法为止。如果异常传递到main方法，而main不具备处理能力，也没有通过throws声明抛出该异常，将可能出现编译错误。
+
+  <span class="number">3</span>)如还有其他异常发生，将使用<span class="keyword">catch</span> (<span class="keyword">Exception</span> e)捕捉异常。由于<span class="keyword">Exception</span>是所有异常类的父类，如果将<span class="keyword">catch</span> (<span class="keyword">Exception</span> e)代码块放在其他两个代码块的前面，后面的代码块将永远得不到执行，就没有什么意义了，所以<span class="keyword">catch</span>语句的顺序不可掉换。
+</code></pre><p>4.4 Throwable类中的常用方法</p>
+<p>注意：catch关键字后面括号中的Exception类型的参数e。Exception就是try代码块传递给catch代码块的变量类型，e就是变量名。catch代码块中语句”e.getMessage();”用于输出错误性质。通常异常处理常用3个函数来获取异常的有关信息:</p>
+<pre><code> getCause()：返回抛出异常的原因。如果 cause 不存在或未知，则返回 <span class="literal">null</span>。
+</code></pre><p>　 getMeage()：返回异常的消息信息。</p>
+<p>　 printStackTrace()：对象的堆栈跟踪输出至错误输出流，作为字段 System.err 的值。</p>
+<pre><code> 有时为了简单会忽略掉<span class="keyword">catch</span>语句后的代码，这样<span class="keyword">try</span>-<span class="keyword">catch</span>语句就成了一种摆设，一旦程序在运行过程中出现了异常，就会忽略处理异常，而错误发生的原因很难查找。
+</code></pre><p> 5.Java常见异常</p>
+<p>在Java中提供了一些异常用来描述经常发生的错误，对于这些异常，有的需要程序员进行捕获处理或声明抛出，有的是由Java虚拟机自动进行捕获处理。Java中常见的异常类:</p>
+<ol>
+<li><p>runtimeException子类:</p>
+<pre><code> <span class="number">1</span>、 java.lang.ArrayIndexOutOfBoundsException
+ 数组索引越界异常。当对数组的索引值为负数或大于等于数组大小时抛出。
+ <span class="number">2</span>、java.lang.ArithmeticException
+ 算术条件异常。譬如：整数除零等。
+ <span class="number">3</span>、java.lang.NullPointerException
+ 空指针异常。当应用试图在要求使用对象的地方使用了<span class="literal">null</span>时，抛出该异常。譬如：调用<span class="literal">null</span>对象的实例方法、访问<span class="literal">null</span>对象的属性、计算<span class="literal">null</span>对象的长度、使用<span class="keyword">throw</span>语句抛出<span class="literal">null</span>等等
+ <span class="number">4</span>、java.lang.ClassNotFoundException
+ 找不到类异常。当应用试图根据字符串形式的类名构造类，而在遍历CLASSPAH之后找不到对应名称的<span class="class"><span class="keyword">class</span>文件时，抛出该异常。</span>
+
+<span class="number">5</span>、java.lang.NegativeArraySizeException  数组长度为负异常
+
+<span class="number">6</span>、java.lang.ArrayStoreException 数组中包含不兼容的值抛出的异常
+
+<span class="number">7</span>、java.lang.SecurityException 安全性异常
+
+<span class="number">8</span>、java.lang.IllegalArgumentException 非法参数异常
+</code></pre></li>
+</ol>
+<p>2.IOException</p>
+<pre><code>IOException：操作输入流和输出流时可能出现的异常。
+
+EOFException   文件已结束异常
+
+FileNotFoundException   文件未找到异常
+</code></pre><ol>
+<li><p>其他</p>
+<p> ClassCastException    类型转换异常类</p>
+<p> ArrayStoreException  数组中包含不兼容的值抛出的异常</p>
+<p> SQLException   操作数据库异常类</p>
+<p> NoSuchFieldException   字段未找到异常</p>
+<p> NoSuchMethodException   方法未找到抛出的异常</p>
+<p> NumberFormatException    字符串转换为数字抛出的异常</p>
+<p> StringIndexOutOfBoundsException 字符串索引超出范围抛出的异常</p>
+<p> IllegalAccessException  不允许访问某类异常</p>
+<p> InstantiationException  当应用程序试图使用Class类中的newInstance()方法创建一个类的实例，而指定的类对象无法被实例化时，抛出该异常</p>
+</li>
+</ol>
+<p> 6.自定义异常</p>
+<p>使用Java内置的异常类可以描述在编程时出现的大部分异常情况。除此之外，用户还可以自定义异常。用户自定义异常类，只需继承Exception类即可。<br>    在程序中使用自定义异常类，大体可分为以下几个步骤。<br>（1）创建自定义异常类。<br>（2）在方法中通过throw关键字抛出异常对象。<br>（3）如果在当前抛出异常的方法中处理异常，可以使用try-catch语句捕获并处理；否则在方法的声明处通过throws关键字指明要抛出给方法调用者的异常，继续进行下一步操作。<br>（4）在出现异常方法的调用者中捕获并处理异常。</p>
+<p>在上面的“使用throw抛出异常”例子已经提到了。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java基础/">java基础</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/javase/">javase</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/03/01/javase5/" title="java基础--反射">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  java基础--反射</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/03/01/javase3/"  title="java基础--接口">
+ <strong>NEXT:</strong><br/> 
+ <span>java基础--接口
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<!-- ��˵���ۿ� start -->
+	<div class="ds-thread" data-thread-key="2012/03/01/javase4/" data-title="java基础--异常处理" data-url="http://jeesd.com/2012/03/01/javase4/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jeesd"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- ��˵����JS���� end -->
+
+<!-- �ٶ�ͳ�ƹ���JS���� end -->
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/javase/" title="javase">javase<sup>9</sup></a></li>
+		
+			<li><a href="/categories/spring/" title="spring">spring<sup>2</sup></a></li>
+		
+			<li><a href="/categories/utils/" title="utils">utils<sup>9</sup></a></li>
+		
+			<li><a href="/categories/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java基础/" title="java基础">java基础<sup>9</sup></a></li>
+		
+			<li><a href="/tags/工具/" title="工具">工具<sup>9</sup></a></li>
+		
+			<li><a href="/tags/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://jeesd.com" target="_blank" title="SongShiDong">Jeesd.Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://jeesd.com" target="_blank" title="songshidong">songshidong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jeesd"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

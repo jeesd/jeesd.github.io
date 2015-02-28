@@ -1,0 +1,392 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>java基础--数据类型&amp;运算符 | jeesd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="songshidong">
+    
+    <meta name="description" itemprop="description" content="java基础--数据类型&amp;运算符">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="jeesd" title="jeesd"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="jeesd">jeesd</a></h1>
+				<h2 class="blog-motto">~~東哥`博客~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">about</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:jeesd.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/02/28/javase/" title="java基础--数据类型&amp;运算符" itemprop="url">java基础--数据类型&amp;运算符</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://jeesd.com" title="songshidong">songshidong</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-02-28T05:09:44.000Z" itemprop="datePublished">2月 28 2012</time>
+    更新日期:<time datetime="2015-02-28T06:00:28.000Z" itemprop="dateModified">2月 28 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>1基本数据类型（基本数据类型值内存分配在栈空间里面）</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">基本类型	大小	最小值	最大值		默认值  	包装类型</div><div class="line"><span class="keyword">boolean</span>		<span class="number">1</span>bit		-	<span class="keyword">false</span>  		<span class="keyword">Boolean</span></div><div class="line"><span class="keyword">char</span>		<span class="number">16</span>bit	Unicode		‘\u0000 ’	Character</div><div class="line"><span class="keyword">byte</span>		<span class="number">8</span>bit	 -<span class="number">128</span> 	  <span class="number">127</span>	(<span class="keyword">byte</span>)<span class="number">0</span>		<span class="keyword">Byte</span></div><div class="line"><span class="keyword">short</span>		<span class="number">16</span>bit			(<span class="keyword">short</span>)<span class="number">0</span> 	<span class="keyword">Short</span></div><div class="line"><span class="keyword">int</span>		<span class="number">32</span>bit			<span class="number">0</span>		Integer</div><div class="line"><span class="keyword">long</span>		<span class="number">64</span>bit			<span class="number">0</span>L		<span class="keyword">Long</span></div><div class="line"><span class="keyword">float</span>		<span class="number">32</span>bit			<span class="number">0.0</span>F		<span class="keyword">Float</span></div><div class="line"><span class="keyword">double</span>		<span class="number">64</span>bit			<span class="number">0.0</span>D		<span class="keyword">Double</span></div><div class="line"><span class="keyword">void</span>		-		-		-	<span class="keyword">Void</span></div></pre></td></tr></table></figure>
+
+<p>由于char是unicode(采用双字节对字符进行编码),可以存储汉。<br>如：char temp = ‘哈’;</p>
+<p>2.引用数据类型<br>类（Class），接口（Interface），数组（array），字符串（String）等。</p>
+<p>3.操作符<br>在最底层,java中的数据是通过使用操作符来操作的<br>原码: 一个整数，按照绝对值大小转换成的二进制数，称为原码<br>反码: 将二进制数按位取反，所得的新二进制数称为原二进制数的反码<br>补码：反码加1称为补码</p>
+<ol>
+<li><p>Java中的二进制(以byte为例)<br>42的正数表示: 00101010<br>42的负数表示: 00101010取反再加1,即 11010110<br>高位表示符号位,所以byte型的最大表示范围为-128~127<br>  // 以下解析过程就会越界<br>  // 1.Integer.toBinaryString(-100) 解析-100为二进制<br>  // 2.Integer.parseInt(“11111111111111111111111110011100”,2)<br>  // 2.把11111111111111111111110011100当作无符号表示来解析.<br>  Integer.parseInt(Integer.toBinaryString(-100), 2);</p>
+</li>
+<li><p>逻辑运算符<br>&amp;&amp; || !</p>
+</li>
+<li>按位操作符<br>&amp; | ~ ^<br>位运算符应用于每个二进制位<br>位运算都要当作是补全位数的值来运算<br>~ 按位非（NOT）（一元运算）<br>&amp; 按位与（AND）<br>| 按位或（OR）<br>^ 按位异或（XOR）  (位相同为0,不同为1)<blockquote>
+<blockquote>
+<p>右移  (高位不变)</p>
+<blockquote>
+<p>右移 (无符号位移,高位一起移动)<br>运算符 结果<br>&lt;&lt; 左移<br>&amp;= 按位与赋值<br>|= 按位或赋值<br>^= 按位异或赋值<br>= 右移赋值<br>= 右移赋值，左边空出的位以0填充<br>&lt;&lt;= 左移赋值<br>//以下按byte来计算<br>  //0000 0000 &amp; 0000 0001<br>  System.out.println(0 &amp; 1);<br>  //0000 0000 | 0000 0001<br>  System.out.println(0 | 1);<br>  //~0000 0001<br>  System.out.println(~1);<br>  //0000 0000 ^ 0000 0001<br>System.out.println(0 ^ 1);</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+</ol>
+<p>输出:0,1,-2,1</p>
+<p>另外注意:对byte和shor的移位运算,会先转换成int再移位.再截断再赋值</p>
+<ol>
+<li><p>三元操作符<br>boolean?truevalue:falsevalue</p>
+</li>
+<li><p>++操作符</p>
+</li>
+</ol>
+<p>int i =0;<br>        //表达式先返回i,再自加<br>        System.out.println(i++);<br>        System.out.println(i);<br>        i =0;<br>        //表达式先自加,再返回i<br>        System.out.println(++i);<br>System.out.println(i);</p>
+<ol>
+<li>进制转换<br>二进制转八进制:三位转一位<br>二进制转十六进制:四位转一位<br>0000 1111 转十六进制就是0f</li>
+</ol>
+<p>二八十六进制转十进制:各位的2,8,16的N-1次方相加<br>十进制转二八十六进制:连接除2,8,16,余数倒过来</p>
+<ol>
+<li>取模运算</li>
+</ol>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">public</span> <span class="keyword">class</span> Test816 {</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">        <span class="keyword">char</span> hexDigits[] = { <span class="comment">// 用来将字节转换成 16 进制表示的字符</span></div><div class="line">                <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>,</div><div class="line">                        <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span> };</div><div class="line">        </div><div class="line">        <span class="comment">//取模运算   其实就是 n & (N-1) </span></div><div class="line">        <span class="keyword">byte</span> a = <span class="number">11</span> & <span class="number">15</span>;<span class="comment">//取16的模(与上面的数组结合,即可转16进制)</span></div><div class="line">        a = <span class="number">11</span> & <span class="number">7</span>;<span class="comment">//取8的模</span></div><div class="line">        a = <span class="number">11</span> & <span class="number">9</span>;<span class="comment">//取10的模</span></div><div class="line">        </div><div class="line">        a = <span class="number">11</span> & <span class="number">1</span>;<span class="comment">//取2的模(即可判断奇偶数)</span></div><div class="line">        </div><div class="line">        <span class="comment">//转16进制时,只要 7 0xf即可  0x开关的为16进制数</span></div><div class="line">        <span class="comment">//其中的0xf 写成15也可以(只是一种表示形式)</span></div><div class="line">        <span class="keyword">char</span> char16 = hexDigits[<span class="number">16</span> & <span class="number">0xf</span>];</div><div class="line">        System.<span class="keyword">out</span>.println(char16);</div><div class="line">        </div><div class="line">        <span class="comment">//8进制数以0开头</span></div><div class="line">        <span class="keyword">char</span> char8 = hexDigits[<span class="number">16</span> & <span class="number">07</span>];</div><div class="line">        System.<span class="keyword">out</span>.println(char8);</div><div class="line">        </div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java基础/">java基础</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/javase/">javase</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/02/29/javase1/" title="java基础--控制流程">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  java基础--控制流程</span>
+</a>
+</div>
+
+
+</nav>
+
+	
+<!-- ��˵���ۿ� start -->
+	<div class="ds-thread" data-thread-key="2012/02/28/javase/" data-title="java基础--数据类型&amp;运算符" data-url="http://jeesd.com/2012/02/28/javase/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jeesd"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- ��˵����JS���� end -->
+
+<!-- �ٶ�ͳ�ƹ���JS���� end -->
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/javase/" title="javase">javase<sup>9</sup></a></li>
+		
+			<li><a href="/categories/spring/" title="spring">spring<sup>2</sup></a></li>
+		
+			<li><a href="/categories/utils/" title="utils">utils<sup>9</sup></a></li>
+		
+			<li><a href="/categories/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java基础/" title="java基础">java基础<sup>9</sup></a></li>
+		
+			<li><a href="/tags/工具/" title="工具">工具<sup>9</sup></a></li>
+		
+			<li><a href="/tags/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://jeesd.com" target="_blank" title="SongShiDong">Jeesd.Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://jeesd.com" target="_blank" title="songshidong">songshidong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jeesd"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

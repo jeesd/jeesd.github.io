@@ -1,0 +1,375 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>java基础--对象类包 | jeesd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="songshidong">
+    
+    <meta name="description" itemprop="description" content="java基础--对象类包">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="jeesd" title="jeesd"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="jeesd">jeesd</a></h1>
+				<h2 class="blog-motto">~~東哥`博客~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">about</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:jeesd.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/03/01/javase2/" title="java基础--对象类包" itemprop="url">java基础--对象类包</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://jeesd.com" title="songshidong">songshidong</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-03-01T05:09:44.000Z" itemprop="datePublished">3月 1 2012</time>
+    更新日期:<time datetime="2015-02-28T06:58:49.000Z" itemprop="dateModified">2月 28 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>对象（通过new关键字）</p>
+<ol>
+<li>万物皆对象</li>
+<li>程序是对象的集合,它们通过发送消息来告知彼此所要做的</li>
+<li>每个对象都有自己的由其他对象所构成的存储</li>
+<li>每个对象都拥有类型</li>
+<li>某一特定类型的所有对象都可以接收同样的消息</li>
+</ol>
+<p>面向对象的特性：<br>继承、封装、多态、抽象<br>继承： 是一种连结类的层次模型，并且允许和鼓励类的重用，提供了一种明确表示共性的方法。<br>    继承意味着能声明一个类型，而且能继承父类中的所有操作和数据，同时还可以声明自己的新方法以改进、具体化、代替或者扩展父类中的方法<br>    使用父类为应用领域建立层次模型，提供代码重用并允许定制。<br>    防止继承：利用final声明类或方法，意味不能被修改，<br>              当一个类被声明为final时，只有方法自动被设为final,而字段不会。<br>              final有两个优点：1、安全   2高效<br>    类型转换：1、必须在继承体系内进行<br>              2、转换之前，应先使用instanceof进行检验。<br>    super:不是一个对对象的引用，而是指向编译器调用超类的专用关键字:<br>        1、调用超类方法 2、调用超类的构造器。 </p>
+<p>封装：封装是把过程和数据包围起来，对数据的访问只能通过已定义的接口。<br>      面向对象计算始于这个基本概念，即现实世界可以被描绘成一系列完全自治、封装的对象，这些对象通过一个受保护的接口访问其他对象。<br>      封装是一种信息隐藏技术，在java中通过关键字private实现封装。<br>      什么是封装？封装把对象的所有组成部分组合在一起，封装定义程序如何引用对象的数据，封装实际上使用方法将类的数据隐藏起来，控制用户对类的修改和访问数据的程度</p>
+<p>多态：（多态分为静态多态和动态多态）<br>    多态的定义：指允许不同类的对象对同一消息做出响应。即同一消息可以根据发送对象的不同而采用多种不同的行为方式。（发送消息就是函数调用）<br>    实现多态的技术称为：动态绑定（dynamic binding），是指在执行期间判断所引用对象的实际类型，根据其实际的类型调用其相应的方法。<br>    多态的作用：消除类型之间的耦合关系。<br>多态的好处：<br>    1.可替换性（substitutability）。多态对已存在代码具有可替换性。例如，多态对圆Circle类工作，对其他任何圆形几何体，如圆环，也同样工作。<br>    2.可扩充性（extensibility）。多态对代码具有可扩充性。增加新的子类不影响已存在类的多态性、继承性，以及其他特性的运行和操作。实际上新加子类更容易获得多态功能。例如，在实现了圆锥、半圆锥以及半球体的多态基础上，很容易增添球体类的多态性。<br>    3.接口性（interface-ability）。多态是超类通过方法签名，向子类提供了一个共同接口，由子类来完善或者覆盖它而实现的。如图8.3 所示。图中超类Shape规定了两个实现多态的接口方法，computeArea()以及computeVolume()。子类，如Circle和Sphere为了实现多态，完善或者覆盖这两个接口方法。<br>    4.灵活性（flexibility）。它在应用中体现了灵活多样的操作，提高了使用效率。<br>    5.简化性（simplicity）。多态简化对应用软件的代码编写和修改过程，尤其在处理大量对象的运算和操作时，这个特点尤为突出和重要。</p>
+<p>抽象：<br>    abstartic关键字在public 修饰符和void返回值中间<br>    abstartic 不能产生当前对象，重写父类抽象的方法在子类中实现重写父类这个抽象方法<br>    抽象的方法必须位于抽象类中，但抽象中也有不抽象的方法。<br>    抽象如果子类继承了父类父类中的抽象方法在子类中实现<br>    类（Class）<br>    类是来约束对象的属性和行为<br>    类是对象的模板，对象是类的实例</p>
+<p>包（package）<br>包是java中组织和管理类的一种机制，同时可以防止类命名冲突<br>java中的包概念和C#、PHP里面的命名空间一样</p>
+<p>访问权限控制<br>Public:所有可见<br>Private:内部可见<br>默认:包内可见<br>Protected:继承可见</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java基础/">java基础</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/javase/">javase</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/03/01/javase3/" title="java基础--接口">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  java基础--接口</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/02/29/javase1/"  title="java基础--控制流程">
+ <strong>NEXT:</strong><br/> 
+ <span>java基础--控制流程
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<!-- ��˵���ۿ� start -->
+	<div class="ds-thread" data-thread-key="2012/03/01/javase2/" data-title="java基础--对象类包" data-url="http://jeesd.com/2012/03/01/javase2/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jeesd"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- ��˵����JS���� end -->
+
+<!-- �ٶ�ͳ�ƹ���JS���� end -->
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/javase/" title="javase">javase<sup>9</sup></a></li>
+		
+			<li><a href="/categories/spring/" title="spring">spring<sup>2</sup></a></li>
+		
+			<li><a href="/categories/utils/" title="utils">utils<sup>9</sup></a></li>
+		
+			<li><a href="/categories/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java基础/" title="java基础">java基础<sup>9</sup></a></li>
+		
+			<li><a href="/tags/工具/" title="工具">工具<sup>9</sup></a></li>
+		
+			<li><a href="/tags/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://jeesd.com" target="_blank" title="SongShiDong">Jeesd.Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://jeesd.com" target="_blank" title="songshidong">songshidong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jeesd"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>

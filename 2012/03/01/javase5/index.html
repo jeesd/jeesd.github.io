@@ -1,0 +1,386 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>java基础--反射 | jeesd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="songshidong">
+    
+    <meta name="description" itemprop="description" content="java基础--反射">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="jeesd" title="jeesd"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="jeesd">jeesd</a></h1>
+				<h2 class="blog-motto">~~東哥`博客~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">about</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:jeesd.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/03/01/javase5/" title="java基础--反射" itemprop="url">java基础--反射</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://jeesd.com" title="songshidong">songshidong</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-03-01T05:09:44.000Z" itemprop="datePublished">3月 1 2012</time>
+    更新日期:<time datetime="2015-02-28T08:00:11.000Z" itemprop="dateModified">2月 28 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>反射：<br>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；<br>这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制</p>
+<p>Java反射机制主要提供了以下功能：<br>在运行时判断任意一个对象所属的类；<br>在运行时构造任意一个类的对象；<br>在运行时判断任意一个类所具有的成员变量和方法；<br>在运行时调用任意一个对象的方法；<br>生成动态代理</p>
+<p>基类回顾：<br>众所周知Java有个Object 类，是所有Java 类的继承根源，其内声明了数个应该在所有Java 类中被改写的方法：<br>hashCode()、equals()、clone()、toString()、wait()、notify()、notifyAll()、finalize()、getClass()等。<br>其中getClass()返回一个Class 对象<br>方法摘要</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span>  Object <span class="title">clone</span>()      创建并返回此对象的一个副本。   </div><div class="line"><span class="keyword">boolean</span>  <span class="title">equals</span>(Object obj)      指示某个其他对象是否与此对象“相等”。   </div><div class="line"><span class="keyword">protected</span>  <span class="keyword">void</span>  <span class="title">finalize</span>()       当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。   </div><div class="line">Class&lt;?  extendsObject&gt; <span class="title">getClass</span>()        返回一个对象的运行时类。   </div><div class="line"><span class="keyword">int</span>  <span class="title">hashCode</span>()       返回该对象的哈希码值。   </div><div class="line"><span class="keyword">void</span>  <span class="title">notify</span>()          唤醒在此对象监视器上等待的单个线程。   </div><div class="line"><span class="keyword">void</span> <span class="title">notifyAll</span>()       唤醒在此对象监视器上等待的所有线程。   </div><div class="line">String <span class="title">toString</span>()            返回该对象的字符串表示。   </div><div class="line"><span class="keyword">void</span>  <span class="title">wait</span>()       导致当前的线程等待，直到其他线程调用此对象的 <span class="title">notify</span>() 方法或 <span class="title">notifyAll</span>() 方法。   </div><div class="line"><span class="keyword">void</span>  <span class="title">wait</span>(<span class="keyword">long</span> timeout)         导致当前的线程等待，直到其他线程调用此对象的 <span class="title">notify</span>() 方法或 <span class="title">notifyAll</span>() 方法，或者超过指定的时间量。   </div><div class="line"><span class="keyword">void</span>  <span class="title">wait</span>(<span class="keyword">long</span> timeout,  <span class="keyword">int</span> nanos)     导致当前的线程等待，直到其他线程调用此对象的 <span class="title">notify</span>()</div></pre></td></tr></table></figure>
+
+<p>为什么要用反射机制？直接创建对象不就可以了吗，这就涉及到了动态与静态的概念，<br>静态编译：在编译时确定类型，绑定对象,即通过。<br>动态编译：运行时确定类型，绑定对象。动态编译最大限度发挥了java的灵活性，体现了多<br>态的应用，有以降低类之间的藕合性。<br>一句话，反射机制的优点就是可以实现动态创建对象和编译，体现出很大的灵活性，特别是在J2EE的开发中<br>它的灵活性就表现的十分明显。比如，一个大型的软件，不可能一次就把把它设计的很完美，当这个程序编<br>译后，发布了，当发现需要更新某些功能时，我们不可能要用户把以前的卸载，再重新安装新的版本，假如<br>这样的话，这个软件肯定是没有多少人用的。采用静态的话，需要把整个程序重新编译一次才可以实现功能<br>的更新，而采用反射机制的话，它就可以不用卸载，只需要在运行时才动态的创建和编译，就可以实现该功<br>能。<br>它的缺点是对性能有影响。使用反射基本上是一种解释操作，我们可以告诉JVM，我们希望做什么并且它<br>满足我们的要求。这类操作总是慢于只直接执行相同的操作。</p>
+<p>Java中反射有如下几种实现方式：<br>1、通过Class.forName()方法加载字符串，就可以得到该字符串做代表的Class对象。<br>例如：Class&lt;?&gt; clazz = Class.forName(“java.lang.String”)就可以得到String类的Class对象。值得注意的是，字符串必须是类的全名，即包名+类名<br>2、通过类名调用class属性得到该类的Class对象。<br>例如：Class&lt;?&gt; clazz = String.class也可以得到String类的Class对象。<br>3、调用实例的getClass()方法。<br>例如：Date date = new Date();<br>Class&lt;?&gt; clazz = date.getClass();<br>通过上边的两句代码就可以得到date实例的Class对象。<br>4、如果是基本类型的包装类，则可以通过调用包装类的Type属性来获得该包装类的Class对象。<br>例如：Class&lt;?&gt; clazz = Integer.TYPE;</p>
+<p>API接口<br>   获得构造函数的方法</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">Constructor</span> <span class="title">getConstructor</span><span class="params">(<span class="keyword">Class</span>[] <span class="keyword">params</span>)</span>//根据指定参数获得<span class="title">public</span>构造器</span></div><div class="line"></div><div class="line"><span class="title">Constructor</span>[] <span class="title">getConstructors</span><span class="params">()</span>//获得<span class="title">public</span>的所有构造器</div><div class="line"></div><div class="line"><span class="title">Constructor</span> <span class="title">getDeclaredConstructor</span><span class="params">(<span class="keyword">Class</span>[] <span class="keyword">params</span>)</span>//根据指定参数获得<span class="title">public</span>和非<span class="title">public</span>的构造器</div><div class="line"></div><div class="line"><span class="title">Constructor</span>[] <span class="title">getDeclaredConstructors</span><span class="params">()</span>//获得<span class="title">public</span>的所有构造器</div></pre></td></tr></table></figure>
+
+<pre><code>获得类方法的方法
+</code></pre><figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">Method</span> <span class="title">getMethod</span><span class="params">(String name, <span class="keyword">Class</span>[] <span class="keyword">params</span>)</span>,根据方法名，参数类型获得方法</span></div><div class="line"></div><div class="line"><span class="title">Method</span>[] <span class="title">getMethods</span><span class="params">()</span>//获得所有的<span class="title">public</span>方法</div><div class="line"></div><div class="line"><span class="title">Method</span> <span class="title">getDeclaredMethod</span><span class="params">(String name, <span class="keyword">Class</span>[] <span class="keyword">params</span>)</span>//根据方法名和参数类型，获得<span class="title">public</span>和非<span class="title">public</span>的方法</div><div class="line"></div><div class="line"><span class="title">Method</span>[] <span class="title">getDeclaredMethods</span><span class="params">()</span>//获得所以的<span class="title">public</span>和非<span class="title">public</span>方法</div></pre></td></tr></table></figure>
+
+<pre><code>获得类中属性的方法
+</code></pre><figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Field <span class="function">getField</span>(String name)<span class="comment">//根据变量名得到相应的public变量</span></div><div class="line"></div><div class="line">Field<span class="attr_selector">[]</span> <span class="function">getFields</span>()<span class="comment">//获得类中所以public的方法</span></div><div class="line"></div><div class="line">Field <span class="function">getDeclaredField</span>(String name)<span class="comment">//根据方法名获得public和非public变量</span></div><div class="line"></div><div class="line">Field<span class="attr_selector">[]</span> <span class="function">getDeclaredFields</span>()<span class="comment">//获得类中所有的public和非public方法</span></div></pre></td></tr></table></figure>
+
+
+<p>实例：（代码来自google）</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line">import java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> Student {</div><div class="line"></div><div class="line"> <span class="keyword">private</span> String studentID;</div><div class="line"></div><div class="line"> <span class="keyword">public</span> String studentName;</div><div class="line"></div><div class="line"> <span class="keyword">private</span> Date birthday;</div><div class="line"></div><div class="line"> <span class="keyword">private</span> <span class="keyword">int</span> score;</div><div class="line"></div><div class="line"> <span class="keyword">public</span> String <span class="title">getStudentID</span>() {</div><div class="line"></div><div class="line">  <span class="keyword">return</span> studentID;</div><div class="line"></div><div class="line"> }</div><div class="line"></div><div class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStudentID</span>(String studentID) {</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.studentID = studentID;</div><div class="line"></div><div class="line"> }</div><div class="line"></div><div class="line"> <span class="keyword">public</span> String <span class="title">getStudentName</span>() {</div><div class="line"></div><div class="line">  <span class="keyword">return</span> studentName;</div><div class="line"></div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStudentName</span>(String studentName) {</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.studentName = studentName;</div><div class="line"></div><div class="line"> }</div><div class="line"></div><div class="line"> <span class="keyword">public</span> Date <span class="title">getBirthday</span>() {</div><div class="line"></div><div class="line">  <span class="keyword">return</span> birthday;</div><div class="line"></div><div class="line"> }</div><div class="line"></div><div class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBirthday</span>(Date birthday) {</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.birthday = birthday;</div><div class="line"></div><div class="line"> }</div><div class="line"> </div><div class="line"> <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getScore</span>() {</div><div class="line"></div><div class="line">  <span class="keyword">return</span> score;</div><div class="line"></div><div class="line"> }</div><div class="line"></div><div class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setScore</span>(<span class="keyword">int</span> score) {</div><div class="line"></div><div class="line">  <span class="keyword">this</span>.score = score;</div><div class="line"></div><div class="line"> }</div><div class="line"></div><div class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finishTask</span>(String taskName) {</div><div class="line"></div><div class="line">  System.<span class="keyword">out</span>.println(studentName + <span class="string">"完成了"</span> + taskName + <span class="string">"作业"</span>);</div><div class="line"></div><div class="line"> }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+<p>下边的ReflectionTest类中会运用反射机制获取Student类中的属性和方法，并生成一个实例，用该实例来调用finishTask方法。</p>
+<figure class="highlight {bash}"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.lang.reflect.<span class="type">Field</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.<span class="type">Method</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.<span class="type">Modifier</span>;</div><div class="line"></div><div class="line">public class <span class="type">ReflectionTest</span> {</div><div class="line"></div><div class="line"> public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) {</div><div class="line"></div><div class="line">  <span class="keyword">try</span> {</div><div class="line"></div><div class="line">   //获取<span class="type">Student</span>的<span class="type">Class</span>对象</div><div class="line"></div><div class="line">   <span class="type">Class</span>&lt;?&gt; clazz = <span class="type">Class</span>.forName(<span class="string">"cn.com.huixin.blogcode.Student"</span>);</div><div class="line"></div><div class="line">   //获取该类中所有的属性</div><div class="line"></div><div class="line">   <span class="type">Field</span>[] fields = clazz.getDeclaredFields();</div><div class="line"></div><div class="line">   //遍历所有的属性</div><div class="line"></div><div class="line">   <span class="keyword">for</span> (<span class="type">Field</span> field : fields) {</div><div class="line"></div><div class="line">    //打印属性信息，包括访问控制修饰符，类型及属性名</div><div class="line"></div><div class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(field);</div><div class="line"></div><div class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"修饰符："</span> + <span class="type">Modifier</span>.toString(field.getModifiers()));</div><div class="line"></div><div class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"类型："</span> + field.getType());</div><div class="line"></div><div class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"属性名："</span> + field.getName());</div><div class="line"></div><div class="line">   }</div><div class="line"></div><div class="line">   //获取该类中的所有方法</div><div class="line"></div><div class="line">   <span class="type">Method</span>[] methods = clazz.getDeclaredMethods();</div><div class="line"></div><div class="line">   <span class="keyword">for</span> (<span class="type">Method</span> <span class="keyword">method</span> : methods) {</div><div class="line"></div><div class="line">    //打印方法签名</div><div class="line"></div><div class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="keyword">method</span>);</div><div class="line"></div><div class="line">    </div><div class="line"></div><div class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"修饰符："</span> + <span class="type">Modifier</span>.toString(<span class="keyword">method</span>.getModifiers()));</div><div class="line"></div><div class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"方法名："</span> + <span class="keyword">method</span>.getName());</div><div class="line"></div><div class="line">    <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"返回类型："</span> + <span class="keyword">method</span>.getReturnType());</div><div class="line"></div><div class="line">    //获取方法的参数对象</div><div class="line"></div><div class="line">    <span class="type">Class</span>&lt;?&gt;[] clazzes = <span class="keyword">method</span>.getParameterTypes();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="type">Class</span>&lt;?&gt; class1 : clazzes) {</div><div class="line"></div><div class="line">     <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"参数类型："</span> + class1);</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line">   }</div><div class="line"></div><div class="line">   </div><div class="line"></div><div class="line">   //通过<span class="type">Class</span>对象创建实例</div><div class="line"></div><div class="line">   <span class="type">Student</span> student = (<span class="type">Student</span>)clazz.newInstance();</div><div class="line"></div><div class="line">   //获取属性名为studentName的字段(<span class="type">Field</span>)对象，以便下边重新设置它的值</div><div class="line"></div><div class="line">   <span class="type">Field</span> studentName = clazz.getField(<span class="string">"studentName"</span>);</div><div class="line"></div><div class="line">   //设置studentName的值为”张三“</div><div class="line"></div><div class="line">   studentName.<span class="type">set</span>(student, <span class="string">"张三"</span>);</div><div class="line"></div><div class="line">   </div><div class="line"></div><div class="line">   //通过<span class="type">Class</span>对象获取名为”finishTask“，参数类型为<span class="type">String</span>的方法(<span class="type">Method</span>)对象</div><div class="line"></div><div class="line">   <span class="type">Method</span> finishTask = clazz.getMethod(<span class="string">"finishTask"</span>, <span class="type">String</span>.class);</div><div class="line"></div><div class="line">   //调用finishTask方法</div><div class="line"></div><div class="line">   finishTask.invoke(student, <span class="string">"数学"</span>);</div><div class="line"></div><div class="line">  } catch (<span class="type">Exception</span> e) {</div><div class="line"></div><div class="line">   e.printStackTrace();</div><div class="line"></div><div class="line">  }</div><div class="line"></div><div class="line"> }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>{bash}</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java基础/">java基础</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/javase/">javase</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/03/01/javase6/" title="java基础--IO">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  java基础--IO</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/03/01/javase4/"  title="java基础--异常处理">
+ <strong>NEXT:</strong><br/> 
+ <span>java基础--异常处理
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<!-- ��˵���ۿ� start -->
+	<div class="ds-thread" data-thread-key="2012/03/01/javase5/" data-title="java基础--反射" data-url="http://jeesd.com/2012/03/01/javase5/"></div>
+<!-- ��˵���ۿ� end -->
+<!-- ��˵����JS���� start (һ����ҳֻ������һ��) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jeesd"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- ��˵����JS���� end -->
+
+<!-- �ٶ�ͳ�ƹ���JS���� end -->
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/javase/" title="javase">javase<sup>9</sup></a></li>
+		
+			<li><a href="/categories/spring/" title="spring">spring<sup>2</sup></a></li>
+		
+			<li><a href="/categories/utils/" title="utils">utils<sup>9</sup></a></li>
+		
+			<li><a href="/categories/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java基础/" title="java基础">java基础<sup>9</sup></a></li>
+		
+			<li><a href="/tags/工具/" title="工具">工具<sup>9</sup></a></li>
+		
+			<li><a href="/tags/杂谈/" title="杂谈">杂谈<sup>1</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://jeesd.com" target="_blank" title="SongShiDong">Jeesd.Blog</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://jeesd.com" target="_blank" title="songshidong">songshidong</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jeesd"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+  </body>
+</html>
